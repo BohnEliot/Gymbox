@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Jan 29. 12:42
+-- Létrehozás ideje: 2026. Már 13. 15:34
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -42,21 +42,41 @@ CREATE TABLE `berlesek` (
 
 CREATE TABLE `csomagok` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `kontener` bigint(20) UNSIGNED NOT NULL,
-  `gepcsomag` bigint(20) UNSIGNED NOT NULL,
-  `ertekeles` bigint(20) UNSIGNED NOT NULL
+  `kontener_id` bigint(20) UNSIGNED NOT NULL,
+  `gepcsomag_id` bigint(20) UNSIGNED NOT NULL,
+  `ertekeles_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `edzesterv_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- A tábla adatainak kiíratása `csomagok`
 --
 
-INSERT INTO `csomagok` (`id`, `kontener`, `gepcsomag`, `ertekeles`) VALUES
-(1, 2, 1, 3),
-(2, 1, 2, 4),
-(3, 3, 3, 6),
-(4, 3, 4, 4),
-(5, 4, 5, 6);
+INSERT INTO `csomagok` (`id`, `kontener_id`, `gepcsomag_id`, `ertekeles_id`, `edzesterv_id`) VALUES
+(1, 2, 1, 3, NULL),
+(2, 1, 2, 4, NULL),
+(3, 3, 3, 6, NULL),
+(4, 3, 4, 4, NULL),
+(5, 4, 5, 6, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `edzestervek`
+--
+
+CREATE TABLE `edzestervek` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `felhasznalo_id` bigint(20) UNSIGNED NOT NULL,
+  `megjegyzes` varchar(255) DEFAULT NULL,
+  `hetfo` varchar(255) NOT NULL,
+  `kedd` varchar(255) NOT NULL,
+  `szerda` varchar(255) NOT NULL,
+  `csutortok` varchar(255) NOT NULL,
+  `pentek` varchar(255) NOT NULL,
+  `szombat` varchar(255) NOT NULL,
+  `vasarnap` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -97,15 +117,15 @@ CREATE TABLE `felhasznalok` (
   `email` varchar(255) NOT NULL,
   `jelszo` varchar(255) NOT NULL,
   `edzoE` tinyint(1) NOT NULL,
-  `ertekeles` bigint(20) UNSIGNED NOT NULL,
-  `kontener` bigint(20) UNSIGNED NOT NULL
+  `ertekeles_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `kontener_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- A tábla adatainak kiíratása `felhasznalok`
 --
 
-INSERT INTO `felhasznalok` (`id`, `nev`, `email`, `jelszo`, `edzoE`, `ertekeles`, `kontener`) VALUES
+INSERT INTO `felhasznalok` (`id`, `nev`, `email`, `jelszo`, `edzoE`, `ertekeles_id`, `kontener_id`) VALUES
 (1, 'Bohn Eliot Konstantin', 'bohneliot@gmail.com', 'ezajelszo', 1, 1, 3);
 
 -- --------------------------------------------------------
@@ -241,8 +261,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2026_01_21_114139_create_felhasznalos_table', 1),
 (4, '2026_01_22_094827_create_geps_table', 1),
 (5, '2026_01_26_080150_create_gepcsomags_table', 1),
-(6, '2026_01_26_095600_create_csomags_table', 1),
-(7, '2026_01_26_101501_create_berles_table', 1);
+(6, '2026_01_26_095500_create_edzestervs_table', 1),
+(7, '2026_01_26_095600_create_csomags_table', 1),
+(8, '2026_01_26_101501_create_berles_table', 1);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -260,9 +281,17 @@ ALTER TABLE `berlesek`
 --
 ALTER TABLE `csomagok`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `csomagok_kontener_foreign` (`kontener`),
-  ADD KEY `csomagok_gepcsomag_foreign` (`gepcsomag`),
-  ADD KEY `csomagok_ertekeles_foreign` (`ertekeles`);
+  ADD KEY `csomagok_kontener_id_foreign` (`kontener_id`),
+  ADD KEY `csomagok_gepcsomag_id_foreign` (`gepcsomag_id`),
+  ADD KEY `csomagok_ertekeles_id_foreign` (`ertekeles_id`),
+  ADD KEY `csomagok_edzesterv_id_foreign` (`edzesterv_id`);
+
+--
+-- A tábla indexei `edzestervek`
+--
+ALTER TABLE `edzestervek`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `edzestervek_felhasznalo_id_foreign` (`felhasznalo_id`);
 
 --
 -- A tábla indexei `ertekelesek`
@@ -276,8 +305,9 @@ ALTER TABLE `ertekelesek`
 --
 ALTER TABLE `felhasznalok`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `felhasznalok_ertekeles_foreign` (`ertekeles`),
-  ADD KEY `felhasznalok_kontener_foreign` (`kontener`);
+  ADD UNIQUE KEY `felhasznalok_email_unique` (`email`),
+  ADD KEY `felhasznalok_ertekeles_id_foreign` (`ertekeles_id`),
+  ADD KEY `felhasznalok_kontener_id_foreign` (`kontener_id`);
 
 --
 -- A tábla indexei `gepcsomagok`
@@ -325,6 +355,12 @@ ALTER TABLE `csomagok`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT a táblához `edzestervek`
+--
+ALTER TABLE `edzestervek`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT a táblához `ertekelesek`
 --
 ALTER TABLE `ertekelesek`
@@ -358,7 +394,7 @@ ALTER TABLE `kontenerek`
 -- AUTO_INCREMENT a táblához `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -374,16 +410,23 @@ ALTER TABLE `berlesek`
 -- Megkötések a táblához `csomagok`
 --
 ALTER TABLE `csomagok`
-  ADD CONSTRAINT `csomagok_ertekeles_foreign` FOREIGN KEY (`ertekeles`) REFERENCES `ertekelesek` (`id`),
-  ADD CONSTRAINT `csomagok_gepcsomag_foreign` FOREIGN KEY (`gepcsomag`) REFERENCES `gepcsomagok` (`id`),
-  ADD CONSTRAINT `csomagok_kontener_foreign` FOREIGN KEY (`kontener`) REFERENCES `kontenerek` (`id`);
+  ADD CONSTRAINT `csomagok_edzesterv_id_foreign` FOREIGN KEY (`edzesterv_id`) REFERENCES `edzestervek` (`id`),
+  ADD CONSTRAINT `csomagok_ertekeles_id_foreign` FOREIGN KEY (`ertekeles_id`) REFERENCES `ertekelesek` (`id`),
+  ADD CONSTRAINT `csomagok_gepcsomag_id_foreign` FOREIGN KEY (`gepcsomag_id`) REFERENCES `gepcsomagok` (`id`),
+  ADD CONSTRAINT `csomagok_kontener_id_foreign` FOREIGN KEY (`kontener_id`) REFERENCES `kontenerek` (`id`);
+
+--
+-- Megkötések a táblához `edzestervek`
+--
+ALTER TABLE `edzestervek`
+  ADD CONSTRAINT `edzestervek_felhasznalo_id_foreign` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalok` (`id`) ON DELETE CASCADE;
 
 --
 -- Megkötések a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  ADD CONSTRAINT `felhasznalok_ertekeles_foreign` FOREIGN KEY (`ertekeles`) REFERENCES `ertekelesek` (`id`),
-  ADD CONSTRAINT `felhasznalok_kontener_foreign` FOREIGN KEY (`kontener`) REFERENCES `kontenerek` (`id`);
+  ADD CONSTRAINT `felhasznalok_ertekeles_id_foreign` FOREIGN KEY (`ertekeles_id`) REFERENCES `ertekelesek` (`id`),
+  ADD CONSTRAINT `felhasznalok_kontener_id_foreign` FOREIGN KEY (`kontener_id`) REFERENCES `kontenerek` (`id`);
 
 --
 -- Megkötések a táblához `gepcsomagok`
