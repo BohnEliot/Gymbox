@@ -10,6 +10,7 @@ use App\Models\Felhasznalo;
 use App\Models\Gep;
 use App\Models\Gepcsomag;
 use App\Models\Csomag;
+use App\Models\Edzesterv;
 
 
 class DatabaseSeeder extends Seeder
@@ -50,10 +51,14 @@ class DatabaseSeeder extends Seeder
         }
 
 
-        $felhasznalok=[["Bohn Eliot Konstantin","bohneliot@gmail.com","ezajelszo",true,1,3]];
+        $felhasznalok=[
+            ["Bohn Eliot Konstantin", "bohneliot@gmail.com", "ezajelszo", true, 1, 3],
+            ["Kiss Dávid", "kissdavid@gmail.com", "ezajelszo", true, 4, 2],
+            ["Teszt Vásárló", "teszt@gmail.com", "ezajelszo", false, null, null],
+        ];
         
         foreach($felhasznalok as $key=>$value){
-            Felhasznalo::create(['nev'=>$value[0], 'email'=>$value[1], 'jelszo'=>$value[2],'edzoE'=>$value[3], 'ertekeles'=>$value[4], 'kontener'=>$value[5]]);
+            Felhasznalo::create(['nev'=>$value[0], 'email'=>$value[1], 'jelszo'=>$value[2],'edzoE'=>$value[3], 'ertekeles_id'=>$value[4], 'kontener_id'=>$value[5]]);
         }
 
 
@@ -110,18 +115,58 @@ class DatabaseSeeder extends Seeder
             Gepcsomag::create(['gepId1'=>$value[0], 'gepId2'=>$value[1], 'gepId3'=>$value[2],'gepId4'=>$value[3], 'gepId5'=>$value[4]]);
         }
 
+         $edzestervek = [
+            [
+                'felhasznalo_id' => 1,
+                'megjegyzes' => 'Kezdő teljes testes program',
+                'hetfo' => 'Mell + tricepsz',
+                'kedd' => 'Hát + bicepsz',
+                'szerda' => 'Pihenő',
+                'csutortok' => 'Láb',
+                'pentek' => 'Váll + has',
+                'szombat' => 'Kardió',
+                'vasarnap' => 'Pihenő',
+            ],
+            [
+                'felhasznalo_id' => 2,
+                'megjegyzes' => 'Haladó erősítő program',
+                'hetfo' => 'Mell',
+                'kedd' => 'Hát',
+                'szerda' => 'Láb',
+                'csutortok' => 'Váll',
+                'pentek' => 'Kar',
+                'szombat' => 'Kardió',
+                'vasarnap' => 'Pihenő',
+            ],
+            [
+                'felhasznalo_id' => 1,
+                'megjegyzes' => 'Zsírégető program',
+                'hetfo' => 'HIIT + has',
+                'kedd' => 'Láb + kardió',
+                'szerda' => 'Pihenő',
+                'csutortok' => 'Felsőtest',
+                'pentek' => 'Teljes test',
+                'szombat' => 'Kardió',
+                'vasarnap' => 'Pihenő',
+            ],
+        ];
+
+        foreach ($edzestervek as $edzesterv) {
+            Edzesterv::create($edzesterv);
+        }
+
 
         $csomagok=
         [
-            [2,1,3],
-            [1,2,4],
-            [3,3,6],
-            [3,4,4],
-            [4,5,6]
+            [2,1,3,1],
+            [1,2,4,2],
+            [3,3,6,3],
+            [3,4,4,null],
+            [4,5,6,null]
         ];
 
          foreach($csomagok as $key=>$value){
-            Csomag::create(['kontener'=>$value[0], 'gepcsomag'=>$value[1], 'ertekeles'=>$value[2]]);
+            Csomag::create(['kontener_id'=>$value[0], 'gepcsomag_id'=>$value[1], 'ertekeles_id'=>$value[2],'edzesterv_id'=>$value[3]]);
         }
 
 
