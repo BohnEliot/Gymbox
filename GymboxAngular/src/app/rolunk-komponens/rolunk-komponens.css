@@ -1,0 +1,96 @@
+.content{
+  margin-top: 15vh;
+}
+
+ body::before {
+      display: block;
+      content: '';
+      height: 60px;
+    }
+
+    body {
+      background-color: #121212;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .navBOX {
+      transition: 0.3s;
+    }
+
+    .navBOX:hover {
+      transform: scale(1.1);
+      transition: 0.3s;
+    }
+
+    nav img {
+      height: 8vh;
+      width: 8vh;
+    }
+
+    .fejlec {
+      padding-top: 25vh;
+      padding-bottom: 25vh;
+    }
+
+    .bg-fejlec {
+      background-image: url(/fasz.png);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .kartya {
+      width: 31.5%;
+      max-width: 100%;
+    }
+
+    .piktogram {
+      width: 50vh;
+    }
+
+    .hirdetes {
+      padding-top: 25vh;
+      padding-bottom: 25vh;
+      background-color: azure;
+    }
+
+    .social-icon {
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .social-icon:hover {
+      color: #fcd34d;
+      transform: scale(1.2);
+    }
+
+    footer p {
+      line-height: 1.6;
+    }
+
+    /* ----- Responsive ----- */
+    @media (max-width: 992px) {
+      .bg-fejlec {
+        background-image: url(/fejlec_mobil.png);
+        background-position: center;
+        background-size: 75vh;
+      }
+
+      .kartya {
+        width: 98%;
+      }
+    }
+
+    @media (min-width: 992px) and (max-width: 1102px) {
+      .bg-fejlec {
+        background-size: 120vh;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .kartya {
+        width: 95%;
+      }
+    }
+ 

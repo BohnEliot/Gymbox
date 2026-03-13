@@ -1,0 +1,80 @@
+<div class="container py-5 bg-dark content">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+
+      <div class="card shadow-sm">
+        <div class="card-body p-4 bg-dark text-secondary">
+
+          <h3 class="card-title text-center mb-4">Gymbox - Regisztráció</h3>
+
+          <form (ngSubmit)="registration()">
+
+            <div class="mb-3">
+              <label class="form-label">Felhasználónév</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Felhasználónév"
+                [(ngModel)]="felhasznalo.nev"
+                name="felhasznaloNev"
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email cím</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="pelda@email.hu"
+                [(ngModel)]="felhasznalo.email"
+                name="email"
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Jelszó</label>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Jelszó"
+                [(ngModel)]="felhasznalo.jelszo"
+                name="jelszo"
+                required
+              >
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [(ngModel)]="felhasznalo.edzoE"
+                name="edzo"
+                id="edzoCheck"
+              >
+              <label class="form-check-label" for="edzoCheck">
+                Edző
+              </label>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-warning" [disabled]="isRegistering">
+                Regisztráció
+              </button>
+            </div>
+
+          </form>
+
+          <p class="text-center mt-3 text-danger">
+            {{ message }}
+          </p>
+
+        </div>
+      </div>
+
+      <p class="text-center text-muted mt-3">&copy; 2026 Gymbox</p>
+
+    </div>
+  </div>
+</div>

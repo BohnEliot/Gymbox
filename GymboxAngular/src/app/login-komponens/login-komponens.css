@@ -1,0 +1,11 @@
+.content{
+  margin-top: 15vh;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.btn-primary, .btn-success {
+  border-radius: 6px;
+}

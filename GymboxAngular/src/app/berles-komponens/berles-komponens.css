@@ -1,0 +1,100 @@
+.berles-oldal {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.88)),
+    url('/kont.jpg') center/cover no-repeat fixed;
+}
+
+.fejresz {
+  min-height: 34vh;
+}
+
+.overlay {
+  padding: 4rem 1rem 2rem;
+}
+
+.cim {
+  letter-spacing: 0.18rem;
+}
+
+.kontener-gomb {
+  background: rgba(255, 193, 7, 0.12);
+  color: white;
+  border: 3px solid rgba(255, 193, 7, 0.7);
+  font-weight: 700;
+  transition: 0.25s ease;
+  min-height: 72px;
+}
+
+.kontener-gomb:hover,
+.kontener-gomb.active {
+  background: rgba(255, 193, 7, 0.65);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.info-doboz,
+.kep-panel,
+.ar-panel {
+  background: rgba(0, 0, 0, 0.55);
+  border: 2px solid rgba(255, 193, 7, 0.18);
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+}
+
+.kep-panel {
+  min-height: 100%;
+  padding: 1.5rem;
+}
+
+.kontener-kep {
+  max-height: 460px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
+}
+
+.gep-sor {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gep-sor:last-child {
+  border-bottom: 0;
+}
+
+.nap-sor {
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.nap-sor:last-child {
+  border-bottom: 0;
+}
+
+.kosar-gomb {
+  min-width: 240px;
+  box-shadow: 0 10px 30px rgba(255, 193, 7, 0.25);
+}
+
+.social-icon {
+  transition: 0.2s ease;
+}
+
+.social-icon:hover {
+  color: #ffc107 !important;
+  transform: scale(1.08);
+}
+
+@media (max-width: 991.98px) {
+  .fejresz {
+    min-height: 24vh;
+  }
+
+  .overlay {
+    padding-top: 3rem;
+  }
+
+  .kontener-kep {
+    max-height: 320px;
+  }
+}

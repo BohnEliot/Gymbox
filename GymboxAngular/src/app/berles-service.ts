@@ -1,0 +1,29 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { API_URL } from './api-service';
+import { Berles } from './models/berles.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BerlesService {
+
+  constructor(private http: HttpClient) {}
+
+  getAll(): Observable<Berles[]> {
+    return this.http.get<Berles[]>(`${API_URL}/berles`);
+  }
+
+  getById(id: number): Observable<Berles> {
+    return this.http.get<Berles>(`${API_URL}/berles/${id}`);
+  }
+
+  create(data: Berles) {
+    return this.http.post(`${API_URL}/berles`, data);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${API_URL}/berles/${id}`);
+  }
+}

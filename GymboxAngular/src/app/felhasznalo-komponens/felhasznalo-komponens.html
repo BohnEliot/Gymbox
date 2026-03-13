@@ -1,0 +1,49 @@
+<div class="container py-5 bg-dark" *ngIf="auth.loggedinFelhasznalo() as f">
+
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+
+      <div class="card shadow-sm">
+        <div class="card-body p-4 bg-dark text-secondary">
+
+          <h3 class="text-center mb-4">Üdv, {{ f.nev }}!</h3>
+
+          <ul class="list-group mb-4 bg-dark">
+            <li class="list-group-item bg-dark text-white"><strong>ID:</strong> {{ f.id }}</li>
+            <li class="list-group-item bg-dark text-white"><strong>Email:</strong> {{ f.email }}</li>
+            <li class="list-group-item bg-dark text-white"><strong>Edző:</strong> {{ f.edzoE ? 'Igen' : 'Nem' }}</li>
+            <li class="list-group-item bg-dark text-white" *ngIf="f.ertekeles"><strong>Értékelés ID:</strong> {{ f.ertekeles }}</li>
+            <li class="list-group-item bg-dark text-white" *ngIf="f.kontener"><strong>Konténer ID:</strong> {{ f.kontener }}</li>
+          </ul>
+
+          <h5 class="mb-2">Név módosítása</h5>
+          <div class="input-group ">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Új név"
+              [(ngModel)]="ujNev"
+              name="ujNev"
+            />
+            <button class="btn btn-warning" type="button" (click)="nevModositas()">
+              Mentés
+            </button>
+          </div>
+
+          <p class="text-center mt-3" *ngIf="message">
+            {{ message }}
+          </p>
+
+          <div class="d-grid mt-4">
+            <button class="btn btn-outline-danger" (click)="auth.logout()">
+              Kijelentkezés
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

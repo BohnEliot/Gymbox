@@ -1,0 +1,79 @@
+<section>
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
+    <div class="container-fluid">
+
+      <img src="./ChatGPT_Image_2026._febr._16._19_40_56-removebg-preview.png"
+           class="img-fluid d-none d-lg-block"
+           alt="">
+
+      <a routerLink="/" class="navbar-brand fs-1 mx-5 fw-bold">
+        <span class="text-warning">GYM</span>BOX
+      </a>
+
+      <button class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navmenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse mx-5 align-items-center" id="navmenu">
+
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item p-3 fs-3 border-start border-white my-1 ">
+            <a routerLink="/home" class="nav-link text-white navBOX">
+              Rólunk
+            </a>
+          </li>
+
+          <li class="nav-item p-3 fs-3 border-start border-white my-1 ">
+            <a routerLink="/berlesek" class="nav-link text-white navBOX">
+              Bérlés
+            </a>
+          </li>
+
+          <!-- HA NINCS LOGIN -->
+          <ng-container *ngIf="!auth.loggedinFelhasznalo()">
+
+            <li class="nav-item p-3 fs-3 border-start border-white my-1 ">
+              <a routerLink="/login"
+                 class="nav-link text-white navBOX">
+                 Bejelentkezés
+              </a>
+            </li>
+
+            <li class="nav-item p-3 fs-3 border-start border-white my-1 ">
+              <a routerLink="/register"
+                 class="nav-link text-white navBOX">
+                 Regisztráció
+              </a>
+            </li>
+
+          </ng-container>
+
+          <!-- HA VAN LOGIN -->
+          <ng-container *ngIf="auth.loggedinFelhasznalo() as user">
+
+            <li class="nav-item p-3 fs-3 border-start border-white my-1 ">
+              <a routerLink="/loggedin"
+                 class="nav-link text-warning navBOX">
+                 Szia {{ user.nev }}
+              </a>
+            </li>
+
+            <li class="nav-item p-3 fs-3 border-start border-white my-1">
+              <button class="btn btn-outline-warning"
+                      (click)="logout()">
+                Kijelentkezés
+              </button>
+            </li>
+
+          </ng-container>
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+</section>

@@ -1,0 +1,197 @@
+<section class="berles-oldal bg-dark text-light">
+  <section class="fejresz d-flex align-items-center justify-content-center">
+    <div class="overlay text-center">
+      <h1 class="fw-bold display-5">
+        Bérelj saját <span class="text-warning">GYM</span>BOX konténert
+      </h1>
+      <p class="lead text-secondary mb-0">
+        Válassz konténert, gépcsomagot és edzéstervet egy helyen.
+      </p>
+    </div>
+  </section>
+
+  <section class="cimsor py-5 text-center">
+    <h1 class="text-warning fw-bold cim">
+      <span class="border border-secondary border-3 p-3 bg-black bg-opacity-25">
+        BÉRLÉS
+      </span>
+    </h1>
+  </section>
+
+  <section class="container py-3" *ngIf="!betoltes && !hiba">
+    <div class="row g-3">
+      <div class="col-lg-3 col-sm-6" *ngFor="let csomag of csomagok">
+        <button
+          type="button"
+          class="btn w-100 kontener-gomb py-3"
+          [class.active]="selectedCsomag?.id === csomag.id"
+          (click)="selectCsomag(csomag)"
+        >
+          {{ csomag.kontener?.kontenerNev || ('Konténer ' + csomag.id) }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="container py-5" *ngIf="!betoltes && selectedCsomag as csomag">
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-3">
+        <div class="info-doboz p-3 mb-3">
+          <h4 class="text-warning fw-bold">Konténer adatok</h4>
+          <p class="mb-2"><strong>Név:</strong> {{ csomag.kontener?.kontenerNev }}</p>
+          <p class="mb-2"><strong>Terület:</strong> {{ csomag.kontener?.negyzetMeter }} m²</p>
+          <p class="mb-2"><strong>Súly:</strong> {{ csomag.kontener?.sulyKG }} kg</p>
+          <p class="mb-0">
+            <strong>Belső méret:</strong>
+            {{ csomag.kontener?.belHosszusag }} × {{ csomag.kontener?.belSzelesseg }} ×
+            {{ csomag.kontener?.belMagassag }}
+          </p>
+        </div>
+
+        <div class="info-doboz p-3 mb-3">
+          <h4 class="text-warning fw-bold">Bérlési csomag</h4>
+          <p class="mb-2">Csomag azonosító: #{{ csomag.id }}</p>
+          <p class="mb-0">
+            Gépek száma:
+            <span class="fw-bold">{{ gepLista.length }} db</span>
+          </p>
+        </div>
+
+        <div class="info-doboz p-3">
+          <h4 class="text-warning fw-bold">Edzésterv</h4>
+          <p class="mb-0" *ngIf="csomag.edzesterv; else nincsTerv">
+            Tartozik hozzá edzésterv.
+          </p>
+          <ng-template #nincsTerv>
+            <p class="mb-0 text-secondary">Ehhez a csomaghoz nincs edzésterv megadva.</p>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="col-lg-5 text-center">
+        <div class="kep-panel h-100 d-flex align-items-center justify-content-center">
+          <img
+            src="assets/fejlec_mobil.png"
+            class="img-fluid kontener-kep"
+            alt="Gymbox konténer"
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-4 d-flex flex-column gap-4">
+        <div class="info-doboz p-4">
+          <h3 class="text-warning fw-bold mb-3">Felszereltség</h3>
+
+          <ul class="list-unstyled mb-0" *ngIf="gepLista.length; else nincsGep">
+            <li class="gep-sor" *ngFor="let gep of gepLista">
+              <span>• {{ gep.nev }}</span>
+              <small class="text-secondary d-block">
+                {{ gep.marka }} · {{ gep.kategoria }}
+              </small>
+            </li>
+          </ul>
+
+          <ng-template #nincsGep>
+            <p class="text-secondary mb-0">Ehhez a csomaghoz még nincs gép hozzárendelve.</p>
+          </ng-template>
+        </div>
+
+        <div class="info-doboz p-4" *ngIf="csomag.edzesterv as terv">
+          <h3 class="text-warning fw-bold mb-3">Edzésterv a konténerhez</h3>
+
+          <p class="mb-2" *ngIf="terv.szerzo">
+            <strong>Írta:</strong> {{ terv.szerzo.nev }}
+          </p>
+
+          <p class="mb-3" *ngIf="terv.megjegyzes">
+            <strong>Megjegyzés:</strong> {{ terv.megjegyzes }}
+          </p>
+
+          <div *ngIf="edzestervNapok.length; else uresNapok">
+            <div class="nap-sor" *ngFor="let nap of edzestervNapok">
+              <strong>{{ nap.label }}:</strong> {{ nap.value }}
+            </div>
+          </div>
+
+          <ng-template #uresNapok>
+            <p class="mb-0 text-secondary">Ehhez az edzéstervhez még nincs napi bontás.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container py-4" *ngIf="!betoltes && selectedCsomag">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6 text-center">
+        <div class="ar-panel p-4">
+          <h4 class="mb-3">Bérlés ideje</h4>
+          <select class="form-select form-select-lg bg-dark text-light border-warning"
+                  [(ngModel)]="selectedHonap">
+            <option *ngFor="let honap of honapOpcio" [ngValue]="honap">
+              {{ honap === 12 ? '1 év' : honap === 24 ? '2 év' : honap + ' hónap' }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-6 text-center">
+        <div class="ar-panel p-4">
+          <h4 class="mb-2">Végösszeg</h4>
+          <div class="display-6 text-warning fw-bold">
+            {{ formatAr(vegosszeg) }} Ft
+          </div>
+          <small class="text-secondary">
+            Havi alapár: {{ formatAr(haviAlapAr) }} Ft
+          </small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container text-center py-5" *ngIf="!betoltes && selectedCsomag">
+    <button class="btn btn-warning btn-lg px-5 py-3 fw-bold rounded-pill kosar-gomb">
+      Kosárba
+    </button>
+  </section>
+
+  <section class="container py-5" *ngIf="betoltes">
+    <div class="text-center text-secondary fs-4">Betöltés...</div>
+  </section>
+
+  <section class="container py-5" *ngIf="hiba">
+    <div class="alert alert-danger text-center">{{ hiba }}</div>
+  </section>
+
+  <footer class="bg-dark text-secondary pt-5 pb-4">
+    <div class="container">
+      <div class="row py-3">
+        <div class="col-md-6 mb-4 mb-md-0 text-sm-start text-center">
+          <h5 class="fw-bold text-warning">Gymbox</h5>
+          <p>
+            A Gymbox modern konténerekben kínál profi edzőtermeket, rugalmas bérléssel
+            bárki számára.
+          </p>
+        </div>
+
+        <div class="col-md-6 d-flex align-items-center justify-content-md-end justify-content-center">
+          <a href="https://instagram.com" target="_blank" class="text-secondary mx-3 social-icon">
+            <i class="bi bi-instagram fs-3"></i>
+          </a>
+          <a href="https://facebook.com" target="_blank" class="text-secondary mx-3 social-icon">
+            <i class="bi bi-facebook fs-3"></i>
+          </a>
+          <a href="https://tiktok.com" target="_blank" class="text-secondary mx-3 social-icon">
+            <i class="bi bi-tiktok fs-3"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col text-center">
+          <small>© 2026 Gymbox. Minden jog fenntartva.</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+</section>
