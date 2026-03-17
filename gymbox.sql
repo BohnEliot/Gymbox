@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 13. 15:34
+-- Létrehozás ideje: 2026. Már 17. 18:56
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `berlesek` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `felhasznalo_id` bigint(20) UNSIGNED DEFAULT NULL,
   `csomag` bigint(20) UNSIGNED NOT NULL,
   `berlesiIdo` int(11) NOT NULL,
   `ar` int(11) NOT NULL
@@ -53,9 +54,9 @@ CREATE TABLE `csomagok` (
 --
 
 INSERT INTO `csomagok` (`id`, `kontener_id`, `gepcsomag_id`, `ertekeles_id`, `edzesterv_id`) VALUES
-(1, 2, 1, 3, NULL),
-(2, 1, 2, 4, NULL),
-(3, 3, 3, 6, NULL),
+(1, 2, 1, 3, 1),
+(2, 1, 2, 4, 2),
+(3, 3, 3, 6, 3),
 (4, 3, 4, 4, NULL),
 (5, 4, 5, 6, NULL);
 
@@ -77,6 +78,15 @@ CREATE TABLE `edzestervek` (
   `szombat` varchar(255) NOT NULL,
   `vasarnap` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- A tábla adatainak kiíratása `edzestervek`
+--
+
+INSERT INTO `edzestervek` (`id`, `felhasznalo_id`, `megjegyzes`, `hetfo`, `kedd`, `szerda`, `csutortok`, `pentek`, `szombat`, `vasarnap`) VALUES
+(1, 1, 'Kezdő teljes testes program', 'Mell + tricepsz', 'Hát + bicepsz', 'Pihenő', 'Láb', 'Váll + has', 'Kardió', 'Pihenő'),
+(2, 2, 'Haladó erősítő program', 'Mell', 'Hát', 'Láb', 'Váll', 'Kar', 'Kardió', 'Pihenő'),
+(3, 1, 'Zsírégető program', 'HIIT + has', 'Láb + kardió', 'Pihenő', 'Felsőtest', 'Teljes test', 'Kardió', 'Pihenő');
 
 -- --------------------------------------------------------
 
@@ -126,7 +136,9 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`id`, `nev`, `email`, `jelszo`, `edzoE`, `ertekeles_id`, `kontener_id`) VALUES
-(1, 'Bohn Eliot Konstantin', 'bohneliot@gmail.com', 'ezajelszo', 1, 1, 3);
+(1, 'Bohn Eliot Konstantin', 'bohneliot@gmail.com', 'ezajelszo', 1, 1, 3),
+(2, 'Kiss Dávid', 'kissdavid@gmail.com', 'ezajelszo', 1, 4, 2),
+(3, 'Teszt Vásárló', 'teszt@gmail.com', 'ezajelszo', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -263,7 +275,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2026_01_26_080150_create_gepcsomags_table', 1),
 (6, '2026_01_26_095500_create_edzestervs_table', 1),
 (7, '2026_01_26_095600_create_csomags_table', 1),
-(8, '2026_01_26_101501_create_berles_table', 1);
+(8, '2026_01_26_101501_create_berles_table', 1),
+(9, '2026_03_17_134004_add_felhasznalo_id_to_berlesek_table', 1);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -274,7 +287,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 ALTER TABLE `berlesek`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `berlesek_csomag_foreign` (`csomag`);
+  ADD KEY `berlesek_csomag_foreign` (`csomag`),
+  ADD KEY `berlesek_felhasznalo_id_foreign` (`felhasznalo_id`);
 
 --
 -- A tábla indexei `csomagok`
@@ -346,7 +360,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT a táblához `berlesek`
 --
 ALTER TABLE `berlesek`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `csomagok`
@@ -358,7 +372,7 @@ ALTER TABLE `csomagok`
 -- AUTO_INCREMENT a táblához `edzestervek`
 --
 ALTER TABLE `edzestervek`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `ertekelesek`
@@ -370,7 +384,7 @@ ALTER TABLE `ertekelesek`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `gepcsomagok`
@@ -394,7 +408,7 @@ ALTER TABLE `kontenerek`
 -- AUTO_INCREMENT a táblához `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -404,7 +418,8 @@ ALTER TABLE `migrations`
 -- Megkötések a táblához `berlesek`
 --
 ALTER TABLE `berlesek`
-  ADD CONSTRAINT `berlesek_csomag_foreign` FOREIGN KEY (`csomag`) REFERENCES `csomagok` (`id`);
+  ADD CONSTRAINT `berlesek_csomag_foreign` FOREIGN KEY (`csomag`) REFERENCES `csomagok` (`id`),
+  ADD CONSTRAINT `berlesek_felhasznalo_id_foreign` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalok` (`id`) ON DELETE SET NULL;
 
 --
 -- Megkötések a táblához `csomagok`
