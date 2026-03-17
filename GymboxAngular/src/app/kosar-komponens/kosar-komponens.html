@@ -1,0 +1,48 @@
+<section class="container py-5 text-light">
+  <h1 class="text-warning fw-bold text-center mb-5">Kosár</h1>
+
+  <div *ngIf="items.length === 0" class="text-center">
+    <p class="fs-4 text-secondary">A kosár jelenleg üres.</p>
+    <a routerLink="/berlesek" class="btn btn-warning mt-3">Vissza a bérléshez</a>
+  </div>
+
+  <div *ngIf="items.length > 0">
+    <div class="card bg-black text-light border-warning mb-4" *ngFor="let item of items; let i = index">
+      <div class="card-body">
+        <h3 class="text-warning">
+          {{ item.csomag.kontener?.kontenerNev || ('Csomag #' + item.csomag.id) }}
+        </h3>
+
+        <p class="mb-2">
+          <strong>Bérlési idő:</strong>
+          {{ item.honap === 12 ? '1 év' : item.honap === 24 ? '2 év' : item.honap + ' hónap' }}
+        </p>
+
+        <p class="mb-2">
+          <strong>Havi ár:</strong> {{ formatAr(item.haviAr) }} Ft
+        </p>
+
+        <p class="mb-2">
+          <strong>Végösszeg:</strong> {{ formatAr(item.vegosszeg) }} Ft
+        </p>
+
+        <p class="mb-2" *ngIf="item.csomag.edzesterv?.szerzo">
+          <strong>Edzésterv szerző:</strong> {{ item.csomag.edzesterv?.szerzo?.nev }}
+        </p>
+
+        <button class="btn btn-outline-danger mt-2" (click)="torol(i)">
+          Törlés
+        </button>
+      </div>
+    </div>
+
+    <div class="text-end mt-4">
+      <h3 class="text-warning">Összesen: {{ formatAr(total) }} Ft</h3>
+    </div>
+
+    <div class="d-flex gap-3 justify-content-end mt-4">
+      <button class="btn btn-outline-light" (click)="urit()">Kosár ürítése</button>
+      <button class="btn btn-warning" (click)="veglegesit()" [disabled]="mentesFolyamatban||items.length===0">Bérlés véglegesítése</button>
+    </div>
+  </div>
+</section>

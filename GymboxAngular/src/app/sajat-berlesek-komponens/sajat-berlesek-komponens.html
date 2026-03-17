@@ -1,0 +1,53 @@
+<section class="container py-5 my-5 text-light">
+  <h1 class="text-warning text-center fw-bold mb-5">Saját bérléseim</h1>
+
+  <div *ngIf="betoltes" class="text-center text-secondary fs-4">
+    Betöltés...
+  </div>
+
+  <div *ngIf="hiba" class="alert alert-danger text-center">
+    {{ hiba }}
+  </div>
+
+  <div *ngIf="!betoltes && !hiba && berlesek.length === 0" class="text-center text-secondary fs-4">
+    Még nincs bérlésed.
+  </div>
+
+  <div *ngIf="!betoltes && berlesek.length > 0">
+    <div class="card bg-black text-light border-warning mb-4" *ngFor="let berles of berlesek">
+      <div class="card-body">
+        <h3 class="text-warning">
+          {{ berles.csomag_adat?.kontener?.kontenerNev || ('Csomag #' + berles.csomag) }}
+        </h3>
+
+        <p class="mb-2">
+          <strong>Bérlési idő:</strong> {{ formatIdo(berles.berlesiIdo) }}
+        </p>
+
+        <p class="mb-2">
+          <strong>Ár:</strong> {{ formatAr(berles.ar) }} Ft
+        </p>
+
+        <p class="mb-2" *ngIf="berles.csomag_adat?.edzesterv?.megjegyzes">
+          <strong>Edzésterv:</strong> {{ berles.csomag_adat?.edzesterv?.megjegyzes }}
+        </p>
+
+        <p class="mb-2" *ngIf="berles.csomag_adat?.edzesterv?.szerzo?.nev">
+          <strong>Edzésterv szerzője:</strong>
+          {{ berles.csomag_adat?.edzesterv?.szerzo?.nev }}
+        </p>
+
+        <div *ngIf="berles.csomag_adat?.edzesterv">
+          <p class="mb-1"><strong>Hétfő:</strong> {{ berles.csomag_adat?.edzesterv?.hetfo }}</p>
+          <p class="mb-1"><strong>Kedd:</strong> {{ berles.csomag_adat?.edzesterv?.kedd }}</p>
+          <p class="mb-1"><strong>Szerda:</strong> {{ berles.csomag_adat?.edzesterv?.szerda }}</p>
+          <p class="mb-1"><strong>Csütörtök:</strong> {{ berles.csomag_adat?.edzesterv?.csutortok }}</p>
+          <p class="mb-1"><strong>Péntek:</strong> {{ berles.csomag_adat?.edzesterv?.pentek }}</p>
+          <p class="mb-1"><strong>Szombat:</strong> {{ berles.csomag_adat?.edzesterv?.szombat }}</p>
+          <p class="mb-0"><strong>Vasárnap:</strong> {{ berles.csomag_adat?.edzesterv?.vasarnap }}</p>
+        </div>
+        <button class="btn btn-outline-danger mt-3" (click)="lemondas(berles.id)">Bérlés lemondása</button>
+      </div>
+    </div>
+  </div>
+</section>

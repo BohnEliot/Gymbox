@@ -26,4 +26,9 @@ class Felhasznalo extends Model
     {
         return $this->hasMany(Edzesterv::class, 'felhasznalo_id');
     }
+
+    public function berlesek()
+{
+    return $this->hasMany(Berles::class, 'felhasznalo_id');
+}
 }

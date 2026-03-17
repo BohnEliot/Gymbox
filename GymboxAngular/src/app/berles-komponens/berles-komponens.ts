@@ -6,6 +6,8 @@ import { Gep } from '../models/gep.model';
 import { CsomagService } from '../csomag-service';
 import { GepService } from '../gep-service';
 import { forkJoin } from 'rxjs';
+import { KosarService } from '../kosar-service';
+import { Router } from '@angular/router';
 
 type BerlesiOpcio = 3 | 6 | 12 | 24;
 type EdzestervNapKulcs =
@@ -47,7 +49,9 @@ export class BerlesKomponens {
   constructor(
     private csomagservice: CsomagService,
     private gepservice: GepService,
-    private cdr:ChangeDetectorRef
+    private cdr:ChangeDetectorRef,
+    private kosarService:KosarService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -131,4 +135,21 @@ export class BerlesKomponens {
       }))
       .filter((nap) => !!nap.value);
   }
+
+  kosarba(): void {
+  if (!this.selectedCsomag) {
+    return;
+  }
+
+  this.kosarService.addItem({
+    csomag: this.selectedCsomag,
+    honap: this.selectedHonap,
+    haviAr: this.haviAlapAr,
+    vegosszeg: this.vegosszeg
+  });
+
+  this.router.navigate(['/kosar']);
+}
+
+
 }

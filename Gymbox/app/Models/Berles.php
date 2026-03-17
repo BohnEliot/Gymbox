@@ -8,11 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Berles extends Model
 {
     use HasFactory;
-    public $table="berlesek";
-    public $timestamps=false;
-    public $guarded=[];
 
-    public function csomag(){
-        return $this->belongsTo(Csomag::class,'csomag');
+    protected $table = 'berlesek';
+    public $timestamps=false;
+    protected $guarded = [];
+
+    public function felhasznalo()
+    {
+        return $this->belongsTo(Felhasznalo::class, 'felhasznalo_id');
+    }
+
+    public function csomagAdat()
+    {
+        return $this->belongsTo(Csomag::class, 'csomag');
     }
 }

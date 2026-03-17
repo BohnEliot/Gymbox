@@ -50,6 +50,7 @@ Route::get('/berles',[BerlesController::class,'index']);
 Route::get('/berles/{id}',[BerlesController::class,'getById']);
 Route::post('/berles',[BerlesController::class,'store']);
 Route::delete('/berles/{id}',[BerlesController::class,'destroy']);
+Route::get('/felhasznalo/{id}/berlesek', [BerlesController::class, 'userBerlesek']);
 
 
 

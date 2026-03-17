@@ -10,6 +10,8 @@ import { RegisterKomponens } from './register-komponens/register-komponens';
 import { LoginKomponens } from './login-komponens/login-komponens';
 import { authGuard } from './auth-guard';
 import { RolunkKomponens } from './rolunk-komponens/rolunk-komponens';
+import { KosarKomponens } from './kosar-komponens/kosar-komponens';
+import { SajatBerlesekKomponens } from './sajat-berlesek-komponens/sajat-berlesek-komponens';
 
 
 export const routes: Routes = [
@@ -23,6 +25,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterKomponens },
   { path: 'login', component: LoginKomponens },
   { path: 'home', component: RolunkKomponens },
+  { path: 'kosar', component: KosarKomponens },
+  { path: 'sajat-berleseim', component: SajatBerlesekKomponens },
   { path: '',redirectTo:'home',pathMatch:'full' }
 
 ];
