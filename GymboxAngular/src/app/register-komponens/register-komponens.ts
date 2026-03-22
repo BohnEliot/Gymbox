@@ -12,15 +12,16 @@ import { Router } from '@angular/router';
   styleUrl: './register-komponens.css',
 })
 export class RegisterKomponens {
-   felhasznalo: Felhasznalo = {
-    id: 0,          
-    nev: '',
-    email: '',
-    jelszo: '',
-    edzoE: false,    
-    ertekeles: 0,    
-    kontener: 0      
-  };
+  felhasznalo: Felhasznalo = {
+  id: 0,
+  nev: '',
+  email: '',
+  jelszo: '',
+  edzoE: false,
+  isAdmin: false,
+  ertekeles: 0,
+  kontener: 0
+}
 
   message: string = '';
 

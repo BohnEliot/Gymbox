@@ -29,4 +29,8 @@ export class BerlesService {
  getUserBerlesek(felhasznaloId: number): Observable<Berles[]> {
   return this.http.get<Berles[]>(`${API_URL}/felhasznalo/${felhasznaloId}/berlesek`);
 }
+
+updateStatus(id: number) {
+  return this.http.patch(`${API_URL}/berles/${id}/status`, {});
+}
 }

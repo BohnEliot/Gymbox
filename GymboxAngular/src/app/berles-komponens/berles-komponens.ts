@@ -111,11 +111,25 @@ export class BerlesKomponens {
     const terulet = this.selectedCsomag.kontener.negyzetMeter ?? 0;
     const gepekSzama = this.gepLista.length;
 
-    return 90000 + terulet * 4500 + gepekSzama * 15000;
+    /* return 50000 + terulet * 2000 + gepekSzama * 4000; */
+     if(this.selectedHonap==6){
+      return (50000 + terulet * 2000 + gepekSzama * 4000 )*0.95;
+    }
+    else if(this.selectedHonap==12){
+      return (50000 + terulet * 2000 + gepekSzama * 4000 )*0.85;
+    }
+    else if(this.selectedHonap==24){
+      return (50000 + terulet * 2000 + gepekSzama * 4000 )*0.70;
+    }
+    else{
+       return 50000 + terulet * 2000 + gepekSzama * 4000 ;
+    }
   }
 
   get vegosszeg(): number {
-    return this.haviAlapAr * this.selectedHonap;
+  
+       return Math.floor(this.haviAlapAr * this.selectedHonap);
+  
   }
 
   formatAr(osszeg: number): string {

@@ -10,7 +10,11 @@ class BerlesController extends Controller
 {
     public function index()
     {
-        return Berles::with(['felhasznalo', 'csomagAdat'])->get();
+        return Berles::with([ 'felhasznalo',
+        'csomagAdat.kontener',
+        'csomagAdat.gepcsomag',
+        'csomagAdat.edzesterv',
+        'csomagAdat.ertekeles'])->get();
     }
 
     public function getById($id)
@@ -73,5 +77,15 @@ class BerlesController extends Controller
     ])
     ->where('felhasznalo_id', $felhasznaloId)
     ->get();
+}
+
+public function updateStatus($id)
+{
+    $berles = Berles::findOrFail($id);
+
+    $berles->status = $berles->status === 'folyamatban' ? 'kesz' : 'folyamatban';
+    $berles->save();
+
+    return response()->json($berles);
 }
 }

@@ -20,24 +20,31 @@ class FelhasznaloController extends Controller
         return($felhasznalo);
     }
 
-    public function store(Request $request)
-    {
-                $validator=Validator::make($request->all(),
-                [
-                    "nev"=>"required",
-                    "email"=>"required|email|unique:felhasznalok,email",
-                    "jelszo"=>"required",
-                    "edzoE"=>"required|boolean"
-                ]
-                );
+public function store(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        "nev" => "required",
+        "email" => "required|email|unique:felhasznalok,email",
+        "jelszo" => "required",
+        "edzoE" => "required|boolean"
+    ]);
 
-                if($validator->fails())
-                {
-                    return response()->json(["Hiba!"=>"Hiányzik egy vagy több kötelező adat"],422);
-                }
-                $felhasznalo=Felhasznalo::create($request->all());
-                return response()->json($felhasznalo, 201);
+    if ($validator->fails()) {
+        return response()->json(["Hiba!" => "Hiányzik egy vagy több kötelező adat"], 422);
     }
+
+    $felhasznalo = Felhasznalo::create([
+        'nev' => $request->nev,
+        'email' => $request->email,
+        'jelszo' => $request->jelszo,
+        'edzoE' => $request->edzoE,
+        'isAdmin' => false,
+        'ertekeles_id' => null,
+        'kontener_id' => null,
+    ]);
+
+    return response()->json($felhasznalo, 201);
+}
 
     public function update(Request $request, $id){
         $felhasznalo=Felhasznalo::find($id);

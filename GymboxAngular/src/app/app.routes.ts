@@ -12,6 +12,8 @@ import { authGuard } from './auth-guard';
 import { RolunkKomponens } from './rolunk-komponens/rolunk-komponens';
 import { KosarKomponens } from './kosar-komponens/kosar-komponens';
 import { SajatBerlesekKomponens } from './sajat-berlesek-komponens/sajat-berlesek-komponens';
+import { adminGuard } from './admin-guard';
+import { AdminKomponens } from './admin-komponens/admin-komponens';
 
 
 export const routes: Routes = [
@@ -27,6 +29,7 @@ export const routes: Routes = [
   { path: 'home', component: RolunkKomponens },
   { path: 'kosar', component: KosarKomponens },
   { path: 'sajat-berleseim', component: SajatBerlesekKomponens },
+  { path: 'admin', component: AdminKomponens, canActivate: [adminGuard] },
   { path: '',redirectTo:'home',pathMatch:'full' }
 
 ];

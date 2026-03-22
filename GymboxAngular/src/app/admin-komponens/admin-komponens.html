@@ -1,0 +1,67 @@
+<section>
+  <div class="container my-5 py-5">
+
+    <div class="row">
+      <div class="col-12 text-center text-warning fw-bold mb-5">
+        <h1>ADMIN</h1>
+      </div>
+    </div>
+
+    <div class="row mb-4 text-white">
+      <div class="col-12 col-md-4 mb-3">
+        <div class="bg-black p-3 rounded-4 text-center">
+          <h6>Összes rendelés</h6>
+          <h2>{{ osszesRendeles }}</h2>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4 mb-3">
+        <div class="bg-black p-3 rounded-4 text-center">
+          <h6>Folyamatban</h6>
+          <h2 class="text-warning">{{ folyamatbanDb }}</h2>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4 mb-3">
+        <div class="bg-black p-3 rounded-4 text-center">
+          <h6>Kézbesítve</h6>
+          <h2 class="text-success">{{ kezbesitveDb }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mb-3" *ngFor="let b of berlesek">
+        <div
+          class="bg-black text-white p-3 rounded-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+
+          <div>
+            <h5 class="mb-1">
+              {{ b.felhasznalo?.nev }} - {{ b.csomag_adat?.kontener?.kontenerNev || ('Csomag #' + b.csomag) }}
+            </h5>
+            <span class="badge me-5" [ngClass]="{
+    'bg-success': b.status === 'kesz',
+    'bg-warning text-dark': b.status === 'folyamatban'
+  }">
+              {{ b.status }}
+            </span>
+            <button class="btn btn-sm btn-outline-light me-2" (click)="toggleStatus(b.id)">
+              Állapot váltás
+            </button>
+          </div>
+
+          <button class="btn btn-outline-danger btn-sm mt-3 mt-md-0" (click)="deleteBerles(b.id)"
+            [disabled]="b.status === 'folyamatban'" [ngClass]="{
+    'opacity-50': b.status === 'folyamatban',
+    'cursor-not-allowed': b.status === 'folyamatban'
+  }">
+
+            <i class="bi bi-trash"></i>
+
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

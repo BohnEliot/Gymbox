@@ -4,7 +4,7 @@ export interface Felhasznalo {
   email: string;
   jelszo: string;
   edzoE: boolean;
-  ertekeles: number;
-  kontener: number;
-
+  isAdmin: boolean;
+  ertekeles: number | null;
+  kontener: number | null;
 }

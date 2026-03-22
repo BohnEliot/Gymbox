@@ -2,11 +2,22 @@ import { Csomag } from './csomag.model';
 
 export interface Berles {
   id: number;
-  felhasznalo_id: number | null;
+  felhasznalo_id: number;
   csomag: number;
   berlesiIdo: number;
   ar: number;
-  csomag_adat?: Csomag;
+
+  status?: string;
+
+  felhasznalo?: {
+    nev: string;
+  };
+
+  csomag_adat?: {
+    kontener?: {
+      kontenerNev: string;
+    };
+  };
 }
 
 export interface CreateBerles {
