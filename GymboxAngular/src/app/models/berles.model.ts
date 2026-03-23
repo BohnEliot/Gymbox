@@ -17,6 +17,19 @@ export interface Berles {
     kontener?: {
       kontenerNev: string;
     };
+    edzesterv?: {
+      megjegyzes?: string;
+      hetfo?: string;
+      kedd?: string;
+      szerda?: string;
+      csutortok?: string;
+      pentek?: string;
+      szombat?: string;
+      vasarnap?: string;
+      szerzo?: {
+        nev?: string;
+      };
+    };
   };
 }
 
