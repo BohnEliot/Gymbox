@@ -1,0 +1,109 @@
+<section>
+  <div class="container my-5 py-5">
+
+    <div class="row">
+      <div class="col-12 text-center text-warning fw-bold mb-5">
+        <h1>EDZÉSTERV KÉSZÍTÉS</h1>
+      </div>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-12 col-md-6">
+        <div class="bg-black text-white p-4 rounded-4 h-100">
+          <h4 class="text-warning mb-3">Hétfő</h4>
+          <textarea class="form-control" rows="5" [(ngModel)]="edzesterv.hetfo"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="bg-black text-white p-4 rounded-4 h-100">
+          <h4 class="text-warning mb-3">Kedd</h4>
+          <textarea class="form-control" rows="5" [(ngModel)]="edzesterv.kedd"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="bg-black text-white p-4 rounded-4 h-100">
+          <h4 class="text-warning mb-3">Szerda</h4>
+          <textarea class="form-control" rows="5" [(ngModel)]="edzesterv.szerda"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="bg-black text-white p-4 rounded-4 h-100">
+          <h4 class="text-warning mb-3">Csütörtök</h4>
+          <textarea class="form-control" rows="5" [(ngModel)]="edzesterv.csutortok"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="bg-black text-white p-4 rounded-4 h-100">
+          <h4 class="text-warning mb-3">Péntek</h4>
+          <textarea class="form-control" rows="5" [(ngModel)]="edzesterv.pentek"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="bg-black text-white p-4 rounded-4 h-100">
+          <h4 class="text-warning mb-3">Szombat</h4>
+          <textarea class="form-control" rows="5" [(ngModel)]="edzesterv.szombat"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="bg-black text-white p-4 rounded-4 h-100">
+          <h4 class="text-warning mb-3">Vasárnap</h4>
+          <textarea class="form-control" rows="5" [(ngModel)]="edzesterv.vasarnap"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="bg-black text-white p-4 rounded-4">
+          <h4 class="text-warning mb-3">Megjegyzés</h4>
+          <textarea class="form-control" rows="4" [(ngModel)]="edzesterv.megjegyzes"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12 text-center mt-4">
+        <button class="btn btn-warning btn-lg px-5 fw-bold" (click)="save()">
+          Mentés
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <footer class="bg-dark text-secondary pt-5 pb-4">
+  <div class="container">
+    <div class="row py-3">
+      <!-- Rólunk rövid -->
+      <div class="col-md-6 mb-4 mb-md-0 text-sm-start text-center">
+        <h5 class="fw-bold text-warning">Gymbox</h5>
+        <p>A Gymbox modern konténerekben kínál profi edzőtermeket, rugalmas bérléssel bárki számára.</p>
+      </div>
+
+      <!-- Social ikonok -->
+      <div class="col-md-6 d-flex align-items-center justify-content-md-end justify-content-center ">
+        <a href="https://instagram.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-instagram fs-3"></i>
+        </a>
+        <a href="https://facebook.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-facebook fs-3"></i>
+        </a>
+        <a href="https://tiktok.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-tiktok fs-3"></i>
+        </a>
+      </div>
+    </div>
+
+    
+
+    <div class="row">
+      <div class="col text-center">
+        <small>© 2026 Gymbox. Minden jog fenntartva.</small>
+      </div>
+    </div>
+  </div>
+</footer>

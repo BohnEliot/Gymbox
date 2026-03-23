@@ -31,6 +31,7 @@
     .fejlec {
       padding-top: 25vh;
       padding-bottom: 25vh;
+      
     }
 
     .bg-fejlec {
@@ -39,6 +40,7 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      
     }
 
     .kartya {

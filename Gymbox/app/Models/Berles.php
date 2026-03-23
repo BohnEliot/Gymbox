@@ -16,7 +16,8 @@ class Berles extends Model
     'csomag',
     'berlesiIdo',
     'ar',
-    'status'
+    'status',
+    'edzesterv_id'
 ];
 
     public function felhasznalo()

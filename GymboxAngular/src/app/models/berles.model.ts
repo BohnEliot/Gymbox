@@ -38,4 +38,5 @@ export interface CreateBerles {
   csomag: number;
   berlesiIdo: number;
   ar: number;
+  edzesterv_id?: number | null;
 }

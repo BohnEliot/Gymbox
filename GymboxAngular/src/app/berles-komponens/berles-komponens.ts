@@ -8,6 +8,7 @@ import { GepService } from '../gep-service';
 import { forkJoin } from 'rxjs';
 import { KosarService } from '../kosar-service';
 import { Router } from '@angular/router';
+import { EdzestervService } from '../edzesterv-service';
 
 type BerlesiOpcio = 3 | 6 | 12 | 24;
 type EdzestervNapKulcs =
@@ -28,7 +29,9 @@ type EdzestervNapKulcs =
 export class BerlesKomponens {
   csomagok: Csomag[] = [];
   gepek: Gep[] = [];
+  edzestervek: any[] = [];
 
+  selectedEdzestervId: number | null = null;
   selectedCsomag: Csomag | null = null;
   selectedHonap: BerlesiOpcio = 3;
 
@@ -51,7 +54,8 @@ export class BerlesKomponens {
     private gepservice: GepService,
     private cdr:ChangeDetectorRef,
     private kosarService:KosarService,
-    private router:Router
+    private router:Router,
+    private edzestervService:EdzestervService
   ) {}
 
   ngOnInit(): void {
@@ -60,10 +64,12 @@ export class BerlesKomponens {
     forkJoin({
       csomagok: this.csomagservice.getAll(),
       gepek: this.gepservice.getAll(),
+      edzestervek: this.edzestervService.getAll()
     }).subscribe({
-      next: ({ csomagok, gepek }) => {
+      next: ({ csomagok, gepek,edzestervek }) => {
         this.csomagok = csomagok;
         this.gepek = gepek;
+         this.edzestervek = edzestervek;
 
         if (this.csomagok.length > 0) {
           this.selectedCsomag = this.csomagok[0];
@@ -137,18 +143,22 @@ export class BerlesKomponens {
   }
 
   get edzestervNapok() {
-    const terv = this.selectedCsomag?.edzesterv;
-    if (!terv) {
-      return [];
-    }
-
-    return this.napok
-      .map((nap) => ({
-        label: nap.label,
-        value: terv[nap.key],
-      }))
-      .filter((nap) => !!nap.value);
+  const terv = this.selectedEdzesterv;
+  if (!terv) {
+    return [];
   }
+
+  return this.napok
+    .map((nap) => ({
+      label: nap.label,
+      value: terv[nap.key],
+    }))
+    .filter((nap) => !!nap.value);
+}
+
+  get selectedEdzesterv() {
+  return this.edzestervek.find(terv => terv.id === this.selectedEdzestervId) || null;
+}
 
   kosarba(): void {
   if (!this.selectedCsomag) {
@@ -156,11 +166,13 @@ export class BerlesKomponens {
   }
 
   this.kosarService.addItem({
-    csomag: this.selectedCsomag,
-    honap: this.selectedHonap,
-    haviAr: this.haviAlapAr,
-    vegosszeg: this.vegosszeg
-  });
+  csomag: this.selectedCsomag,
+  honap: this.selectedHonap,
+  haviAr: this.haviAlapAr,
+  vegosszeg: this.vegosszeg,
+  edzesterv_id: this.selectedEdzestervId,
+  edzesterv: this.selectedEdzesterv
+});
 
   this.router.navigate(['/kosar']);
 }

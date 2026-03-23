@@ -29,29 +29,30 @@ class BerlesController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'felhasznalo_id' => 'required|exists:felhasznalok,id',
-            'csomag' => 'required|exists:csomagok,id',
-            'berlesiIdo' => 'required|integer|in:3,6,12,24',
-            'ar' => 'required|integer|min:1',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'felhasznalo_id' => 'required|exists:felhasznalok,id',
+        'csomag' => 'required|exists:csomagok,id',
+        'berlesiIdo' => 'required|integer',
+        'ar' => 'required|numeric',
+        'edzesterv_id' => 'nullable|exists:edzestervek,id',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'hibak' => $validator->errors()
-            ], 422);
-        }
-
-        $berles = Berles::create([
-            'felhasznalo_id' => $request->felhasznalo_id,
-            'csomag' => $request->csomag,
-            'berlesiIdo' => $request->berlesiIdo,
-            'ar' => $request->ar,
-        ]);
-
-        return response()->json($berles->load(['felhasznalo', 'csomagAdat']), 201);
+    if ($validator->fails()) {
+        return response()->json(['hiba' => $validator->errors()], 422);
     }
+
+    $berles = Berles::create([
+        'felhasznalo_id' => $request->felhasznalo_id,
+        'csomag' => $request->csomag,
+        'berlesiIdo' => $request->berlesiIdo,
+        'ar' => $request->ar,
+        'status' => 'folyamatban',
+        'edzesterv_id' => $request->edzesterv_id,
+    ]);
+
+    return response()->json($berles, 201);
+}
 
     public function destroy($id)
     {
