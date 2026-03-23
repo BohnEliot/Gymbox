@@ -65,4 +65,9 @@ updateNev(id: number, nev: string): Observable<Felhasznalo> {
   getfelhasznalo() {
     return this.loggedinFelhasznalo;
   }
+
+isAdmin(): boolean {
+  return this.loggedinFelhasznalo()?.isAdmin === true;
+}
+
 }

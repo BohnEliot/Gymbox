@@ -5,6 +5,8 @@ import { KosarService } from '../kosar-service';
 import { KosarItem } from '../models/kosar.model';
 import { BerlesService } from '../berles-service';
 import { AuthService } from '../auth-service';
+import { forkJoin } from 'rxjs';
+import { EdzestervService } from '../edzesterv-service';
 
 @Component({
   selector: 'app-kosar-komponens',
@@ -20,6 +22,7 @@ export class KosarKomponens implements OnInit {
   constructor(
     private kosarService: KosarService,
     private berlesService: BerlesService,
+    private edzestervService:EdzestervService,
     public auth: AuthService,
     private cdr:ChangeDetectorRef
   ) {}
@@ -39,39 +42,45 @@ export class KosarKomponens implements OnInit {
   }
 
   veglegesit(): void {
-    if (this.items.length === 0) {
-      return;
-    }
+  if (this.items.length === 0) {
+    return;
+  }
 
-    const user = this.auth.loggedinFelhasznalo();
+  const user = this.auth.loggedinFelhasznalo();
 
-    if (!user) {
-      alert('A bérléshez be kell jelentkezni.');
-      return;
-    }
+  if (!user) {
+    alert('A bérléshez be kell jelentkezni.');
+    return;
+  }
 
-    const elso = this.items[0];
-    this.mentesFolyamatban = true;
+  this.mentesFolyamatban = true;
 
+  const requests = this.items.map(item =>
     this.berlesService.create({
       felhasznalo_id: user.id,
-      csomag: elso.csomag.id,
-      berlesiIdo: elso.honap,
-      ar: elso.vegosszeg
-    }).subscribe({
-      next: () => {
-        alert('Sikeres bérlés!');
-        this.kosarService.clearKosar();
-        this.items = [];
-        this.mentesFolyamatban = false;
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Nem sikerült a bérlés mentése.');
-        this.mentesFolyamatban = false;
-      }
-    });
-  }
+      csomag: item.csomag.id,
+      berlesiIdo: item.honap,
+      ar: item.vegosszeg,
+      edzesterv_id: item.edzesterv_id
+    })
+  );
+
+  forkJoin(requests).subscribe({
+    next: () => {
+      alert('Sikeres bérlés!');
+      this.kosarService.clearKosar();
+      this.items = [];
+      this.mentesFolyamatban = false;
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Nem sikerült a bérlés mentése.');
+      this.mentesFolyamatban = false;
+      this.cdr.detectChanges();
+    }
+  });
+}
 
   get total(): number {
     return this.items.reduce((sum, item) => sum + item.vegosszeg, 0);

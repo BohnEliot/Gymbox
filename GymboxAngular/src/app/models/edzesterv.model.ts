@@ -1,14 +1,18 @@
 import { Szerzo } from "./szerzo.model";
 
-export interface Edzesterv{
-  id: number;
-  megjegyzes?: string | null;
-  hetfo?: string | null;
-  kedd?: string | null;
-  szerda?: string | null;
-  csutortok?: string | null;
-  pentek?: string | null;
-  szombat?: string | null;
-  vasarnap?: string | null;
-  szerzo?: Szerzo | null;
+export interface Edzesterv {
+  id?: number;
+  felhasznalo_id: number;
+  hetfo?: string;
+  kedd?: string;
+  szerda?: string;
+  csutortok?: string;
+  pentek?: string;
+  szombat?: string;
+  vasarnap?: string;
+  megjegyzes?: string;
+  szerzo?: {
+    id: number;
+    nev: string;
+  };
 }

@@ -11,7 +11,14 @@ class Berles extends Model
 
     protected $table = 'berlesek';
     public $timestamps=false;
-    protected $guarded = [];
+    protected $fillable = [
+    'felhasznalo_id',
+    'csomag',
+    'berlesiIdo',
+    'ar',
+    'status',
+    'edzesterv_id'
+];
 
     public function felhasznalo()
     {

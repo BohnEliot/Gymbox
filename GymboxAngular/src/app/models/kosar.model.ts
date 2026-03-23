@@ -1,8 +1,11 @@
 import { Csomag } from "./csomag.model";
+import { Edzesterv } from "./edzesterv.model";
 
-export interface KosarItem{
-    csomag:Csomag;
-    honap:3|6|12|24;
-    haviAr:number;
-    vegosszeg:number;
+export interface KosarItem {
+  csomag: Csomag;
+  honap: number;
+  haviAr: number;
+  vegosszeg: number;
+  edzesterv_id?: number | null;
+  edzesterv?: Edzesterv | null;
 }

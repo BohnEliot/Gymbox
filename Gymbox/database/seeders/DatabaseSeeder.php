@@ -51,15 +51,24 @@ class DatabaseSeeder extends Seeder
         }
 
 
-        $felhasznalok=[
-            ["Bohn Eliot Konstantin", "bohneliot@gmail.com", "ezajelszo", true, 1, 3],
-            ["Kiss Dávid", "kissdavid@gmail.com", "ezajelszo", true, 4, 2],
-            ["Teszt Vásárló", "teszt@gmail.com", "ezajelszo", false, null, null],
-        ];
-        
-        foreach($felhasznalok as $key=>$value){
-            Felhasznalo::create(['nev'=>$value[0], 'email'=>$value[1], 'jelszo'=>$value[2],'edzoE'=>$value[3], 'ertekeles_id'=>$value[4], 'kontener_id'=>$value[5]]);
-        }
+        $felhasznalok = [
+    ["Admin User", "admin@gymbox.hu", "admin123", false, true, null, null],
+    ["Bohn Eliot Konstantin", "bohneliot@gmail.com", "ezajelszo", true, false, 1, 3],
+    ["Kiss Dávid", "kissdavid@gmail.com", "ezajelszo", true, false, 4, 2],
+    ["Teszt Vásárló", "teszt@gmail.com", "ezajelszo", false, false, null, null],
+];
+
+foreach ($felhasznalok as $value) {
+    Felhasznalo::create([
+        'nev' => $value[0],
+        'email' => $value[1],
+        'jelszo' => $value[2],
+        'edzoE' => $value[3],
+        'isAdmin' => $value[4],
+        'ertekeles_id' => $value[5],
+        'kontener_id' => $value[6],
+    ]);
+}
 
 
         $gepek=

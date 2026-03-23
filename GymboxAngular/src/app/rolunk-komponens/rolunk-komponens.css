@@ -31,14 +31,16 @@
     .fejlec {
       padding-top: 25vh;
       padding-bottom: 25vh;
+      
     }
 
     .bg-fejlec {
-      background-image: url(/fasz.png);
+      background-image: url(/fejlec.png);
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      
     }
 
     .kartya {

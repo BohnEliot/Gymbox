@@ -21,12 +21,8 @@
   <section class="container py-3" *ngIf="!betoltes && !hiba">
     <div class="row g-3">
       <div class="col-lg-3 col-sm-6" *ngFor="let csomag of csomagok">
-        <button
-          type="button"
-          class="btn w-100 kontener-gomb py-3"
-          [class.active]="selectedCsomag?.id === csomag.id"
-          (click)="selectCsomag(csomag)"
-        >
+        <button type="button" class="btn w-100 kontener-gomb py-3" [class.active]="selectedCsomag?.id === csomag.id"
+          (click)="selectCsomag(csomag)">
           {{ csomag.kontener?.kontenerNev || ('Konténer ' + csomag.id) }}
         </button>
       </div>
@@ -70,11 +66,7 @@
 
       <div class="col-lg-5 text-center">
         <div class="kep-panel h-100 d-flex align-items-center justify-content-center">
-          <img
-            src="assets/fejlec_mobil.png"
-            class="img-fluid kontener-kep"
-            alt="Gymbox konténer"
-          />
+          <img src="" class="img-fluid kontener-kep" alt="Gymbox konténer" />
         </div>
       </div>
 
@@ -96,25 +88,37 @@
           </ng-template>
         </div>
 
-        <div class="info-doboz p-4" *ngIf="csomag.edzesterv as terv">
-          <h3 class="text-warning fw-bold mb-3">Edzésterv a konténerhez</h3>
+        <div class="mb-4">
+          <label class="form-label text-white fw-bold">Edzésterv választása</label>
+          <select class="form-select" [(ngModel)]="selectedEdzestervId">
+            <option [ngValue]="null">Válassz edzéstervet</option>
+            <option *ngFor="let terv of edzestervek" [ngValue]="terv.id">
+              {{ terv.szerzo?.nev }} edzésterve
+            </option>
+          </select>
+        </div>
 
-          <p class="mb-2" *ngIf="terv.szerzo">
-            <strong>Írta:</strong> {{ terv.szerzo.nev }}
-          </p>
+        <div class="bg-black text-white p-4 rounded-4 mt-3 edzesterv-panel">
+          <h4 class="text-warning mb-3">Kiválasztott edzésterv</h4>
 
-          <p class="mb-3" *ngIf="terv.megjegyzes">
-            <strong>Megjegyzés:</strong> {{ terv.megjegyzes }}
-          </p>
+          <ng-container *ngIf="selectedEdzesterv; else nincsValasztottTerv">
+            <p *ngIf="selectedEdzesterv.szerzo?.nev">
+              <strong>Edző:</strong> {{ selectedEdzesterv.szerzo?.nev }}
+            </p>
 
-          <div *ngIf="edzestervNapok.length; else uresNapok">
-            <div class="nap-sor" *ngFor="let nap of edzestervNapok">
-              <strong>{{ nap.label }}:</strong> {{ nap.value }}
+            <p *ngIf="selectedEdzesterv.megjegyzes">
+              <strong>Megjegyzés:</strong> {{ selectedEdzesterv.megjegyzes }}
+            </p>
+
+            <div *ngIf="edzestervNapok.length > 0" class="mt-3">
+              <div *ngFor="let nap of edzestervNapok" class="mb-2">
+                <strong>{{ nap.label }}:</strong> {{ nap.value }}
+              </div>
             </div>
-          </div>
+          </ng-container>
 
-          <ng-template #uresNapok>
-            <p class="mb-0 text-secondary">Ehhez az edzéstervhez még nincs napi bontás.</p>
+          <ng-template #nincsValasztottTerv>
+            <p class="text-secondary mb-0">Válassz egy edzéstervet a részletek megtekintéséhez.</p>
           </ng-template>
         </div>
       </div>
@@ -126,8 +130,7 @@
       <div class="col-lg-6 text-center">
         <div class="ar-panel p-4">
           <h4 class="mb-3">Bérlés ideje</h4>
-          <select class="form-select form-select-lg bg-dark text-light border-warning"
-                  [(ngModel)]="selectedHonap">
+          <select class="form-select form-select-lg bg-dark text-light border-warning" [(ngModel)]="selectedHonap">
             <option *ngFor="let honap of honapOpcio" [ngValue]="honap">
               {{ honap === 12 ? '1 év' : honap === 24 ? '2 év' : honap + ' hónap' }}
             </option>
@@ -164,34 +167,37 @@
   </section>
 
   <footer class="bg-dark text-secondary pt-5 pb-4">
-    <div class="container">
-      <div class="row py-3">
-        <div class="col-md-6 mb-4 mb-md-0 text-sm-start text-center">
-          <h5 class="fw-bold text-warning">Gymbox</h5>
-          <p>
-            A Gymbox modern konténerekben kínál profi edzőtermeket, rugalmas bérléssel
-            bárki számára.
-          </p>
-        </div>
-
-        <div class="col-md-6 d-flex align-items-center justify-content-md-end justify-content-center">
-          <a href="https://instagram.com" target="_blank" class="text-secondary mx-3 social-icon">
-            <i class="bi bi-instagram fs-3"></i>
-          </a>
-          <a href="https://facebook.com" target="_blank" class="text-secondary mx-3 social-icon">
-            <i class="bi bi-facebook fs-3"></i>
-          </a>
-          <a href="https://tiktok.com" target="_blank" class="text-secondary mx-3 social-icon">
-            <i class="bi bi-tiktok fs-3"></i>
-          </a>
-        </div>
+  <div class="container">
+    <div class="row py-3">
+      <!-- Rólunk rövid -->
+      <div class="col-md-6 mb-4 mb-md-0 text-sm-start text-center">
+        <h5 class="fw-bold text-warning">Gymbox</h5>
+        <p>A Gymbox modern konténerekben kínál profi edzőtermeket, rugalmas bérléssel bárki számára.</p>
       </div>
 
-      <div class="row">
-        <div class="col text-center">
-          <small>© 2026 Gymbox. Minden jog fenntartva.</small>
-        </div>
+      <!-- Social ikonok -->
+      <div class="col-md-6 d-flex align-items-center justify-content-md-end justify-content-center ">
+        <a href="https://instagram.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-instagram fs-3"></i>
+        </a>
+        <a href="https://facebook.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-facebook fs-3"></i>
+        </a>
+        <a href="https://tiktok.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-tiktok fs-3"></i>
+        </a>
       </div>
     </div>
-  </footer>
+
+    
+
+    <div class="row">
+      <div class="col text-center">
+        <small>© 2026 Gymbox. Minden jog fenntartva.</small>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
 </section>
