@@ -30,6 +30,8 @@ export const routes: Routes = [
   { path: 'login', component: LoginKomponens },
   { path: 'home', component: RolunkKomponens },
   { path: 'kosar', component: KosarKomponens },
+  { path: 'gepek', component: GepKomponens },
+  { path: 'kontenerek', component: KontenerKomponens },
   { path: 'sajat-berleseim', component: SajatBerlesekKomponens },
   { path: 'admin', component: AdminKomponens, canActivate: [adminGuard] },
   { path: 'edzesterv-keszites', component: EdzestervKeszitoKomponens, canActivate: [edzoGuard] },

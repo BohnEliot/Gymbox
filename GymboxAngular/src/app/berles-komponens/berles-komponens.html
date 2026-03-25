@@ -66,7 +66,8 @@
 
       <div class="col-lg-5 text-center">
         <div class="kep-panel h-100 d-flex align-items-center justify-content-center">
-          <img src="" class="img-fluid kontener-kep" alt="Gymbox konténer" />
+          <img [src]="selectedKep" class="img-fluid kontener-kep" alt="Gymbox konténer"
+            (error)="onImageError($event)" />
         </div>
       </div>
 
@@ -167,37 +168,37 @@
   </section>
 
   <footer class="bg-dark text-secondary pt-5 pb-4">
-  <div class="container">
-    <div class="row py-3">
-      <!-- Rólunk rövid -->
-      <div class="col-md-6 mb-4 mb-md-0 text-sm-start text-center">
-        <h5 class="fw-bold text-warning">Gymbox</h5>
-        <p>A Gymbox modern konténerekben kínál profi edzőtermeket, rugalmas bérléssel bárki számára.</p>
+    <div class="container">
+      <div class="row py-3">
+        <!-- Rólunk rövid -->
+        <div class="col-md-6 mb-4 mb-md-0 text-sm-start text-center">
+          <h5 class="fw-bold text-warning">Gymbox</h5>
+          <p>A Gymbox modern konténerekben kínál profi edzőtermeket, rugalmas bérléssel bárki számára.</p>
+        </div>
+
+        <!-- Social ikonok -->
+        <div class="col-md-6 d-flex align-items-center justify-content-md-end justify-content-center ">
+          <a href="https://instagram.com" target="_blank" class="text-secondary mx-3 social-icon">
+            <i class="bi bi-instagram fs-3"></i>
+          </a>
+          <a href="https://facebook.com" target="_blank" class="text-secondary mx-3 social-icon">
+            <i class="bi bi-facebook fs-3"></i>
+          </a>
+          <a href="https://tiktok.com" target="_blank" class="text-secondary mx-3 social-icon">
+            <i class="bi bi-tiktok fs-3"></i>
+          </a>
+        </div>
       </div>
 
-      <!-- Social ikonok -->
-      <div class="col-md-6 d-flex align-items-center justify-content-md-end justify-content-center ">
-        <a href="https://instagram.com" target="_blank" class="text-secondary mx-3 social-icon">
-          <i class="bi bi-instagram fs-3"></i>
-        </a>
-        <a href="https://facebook.com" target="_blank" class="text-secondary mx-3 social-icon">
-          <i class="bi bi-facebook fs-3"></i>
-        </a>
-        <a href="https://tiktok.com" target="_blank" class="text-secondary mx-3 social-icon">
-          <i class="bi bi-tiktok fs-3"></i>
-        </a>
+
+
+      <div class="row">
+        <div class="col text-center">
+          <small>© 2026 Gymbox. Minden jog fenntartva.</small>
+        </div>
       </div>
     </div>
-
-    
-
-    <div class="row">
-      <div class="col text-center">
-        <small>© 2026 Gymbox. Minden jog fenntartva.</small>
-      </div>
-    </div>
-  </div>
-</footer>
+  </footer>
 
 
 </section>
