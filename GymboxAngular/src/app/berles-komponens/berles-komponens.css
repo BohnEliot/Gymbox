@@ -43,14 +43,15 @@
 }
 
 .kep-panel {
-  min-height: 100%;
-  padding: 1.5rem;
+  min-height: 420px;
+  
+
 }
 
 .kontener-kep {
-  max-height: 460px;
+  width: max-content;
+  border-radius: 1rem;
   object-fit: contain;
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
 }
 
 .gep-sor {
@@ -91,9 +92,7 @@
   overflow-y: auto;
 }
 
-.kep-panel {
-  min-height: 420px;
-}
+
 
 @media (max-width: 991.98px) {
   .fejresz {

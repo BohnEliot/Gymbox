@@ -1,0 +1,24 @@
+.kontener-card {
+  transition: all 0.3s ease;
+}
+
+.kontener-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.kontener-card img {
+  transition: 0.4s;
+  object-fit: cover;
+}
+
+.kontener-card:hover img {
+  transform: scale(1.08);
+}
+
+.kontener-nagy-kep {
+  height: 320px;
+}
+
+.kontener-kis-kep {
+  height: 180px;
+}

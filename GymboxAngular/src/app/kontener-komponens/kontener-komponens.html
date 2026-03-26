@@ -1,1 +1,94 @@
-<p>kontener-komponens works!</p>
+<section class="bg-dark text-light min-vh-100">
+  <div class="container py-5 my-5">
+
+    <div class="text-center mb-5">
+      <h1 class="text-warning fw-bold display-5">KONTÉNEREK</h1>
+    
+    </div>
+
+    <div *ngIf="betoltes" class="text-center text-secondary fs-4 py-5">
+      Betöltés...
+    </div>
+
+    <div *ngIf="hiba" class="alert alert-danger text-center">
+      {{ hiba }}
+    </div>
+
+    <div class="row g-4" *ngIf="!betoltes && !hiba">
+
+      <div class="col-lg-6 col-12" *ngIf="kiemeltKontener as kontener">
+        <div class="card bg-dark text-light border-0 shadow-lg h-100 overflow-hidden kontener-card">
+          <div class="position-relative">
+            <img [src]="getKontenerKep(kontener)" class="card-img-top" [alt]="kontener.kontenerNev">
+          </div>
+
+          <div class="card-body">
+            <h4 class="text-warning fw-bold">{{ kontener.kontenerNev }}</h4>
+            <p class="text-secondary">
+              {{ kontener.negyzetMeter }} m² · {{ kontener.sulyKG }} kg
+            </p>
+            <p class="text-secondary mb-0">
+              Belső méret:
+              {{ kontener.belHosszusag }} × {{ kontener.belSzelesseg }} × {{ kontener.belMagassag }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-12">
+        <div class="row g-4">
+
+          <div class="col-md-6 col-12" *ngFor="let kontener of tobbiKontener">
+            <div class="card bg-dark text-light border-0 shadow h-100 kontener-card">
+              <img [src]="getKontenerKep(kontener)" class="card-img-top" [alt]="kontener.kontenerNev">
+
+              <div class="card-body text-center">
+                <h6 class="text-warning fw-bold">{{ kontener.kontenerNev }}</h6>
+                <p class="small text-secondary">
+                  {{ kontener.negyzetMeter }} m² · {{ kontener.sulyKG }} kg
+                </p>
+                <p class="small text-secondary mb-0">
+                  {{ kontener.belHosszusag }} × {{ kontener.belSzelesseg }} × {{ kontener.belMagassag }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<footer class="bg-dark text-secondary pt-5 pb-4">
+  <div class="container">
+    <div class="row py-3">
+      <!-- Rólunk rövid -->
+      <div class="col-md-6 mb-4 mb-md-0 text-sm-start text-center">
+        <h5 class="fw-bold text-warning">Gymbox</h5>
+        <p>A Gymbox modern konténerekben kínál profi edzőtermeket, rugalmas bérléssel bárki számára.</p>
+      </div>
+
+      <!-- Social ikonok -->
+      <div class="col-md-6 d-flex align-items-center justify-content-md-end justify-content-center ">
+        <a href="https://instagram.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-instagram fs-3"></i>
+        </a>
+        <a href="https://facebook.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-facebook fs-3"></i>
+        </a>
+        <a href="https://tiktok.com" target="_blank" class="text-secondary mx-3 social-icon">
+          <i class="bi bi-tiktok fs-3"></i>
+        </a>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col text-center">
+        <small>© 2026 Gymbox. Minden jog fenntartva.</small>
+      </div>
+    </div>
+  </div>
+</footer>

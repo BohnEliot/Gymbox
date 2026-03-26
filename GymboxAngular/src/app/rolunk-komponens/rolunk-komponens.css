@@ -1,98 +1,136 @@
-.content{
+.content {
   margin-top: 15vh;
 }
 
- body::before {
-      display: block;
-      content: '';
-      height: 60px;
-    }
+body::before {
+  display: block;
+  content: '';
+  height: 60px;
+}
 
-    body {
-      background-color: #121212;
-      margin: 0;
-      min-height: 100vh;
-    }
+body {
+  background-color: #121212;
+  margin: 0;
+  min-height: 100vh;
+}
 
-    .navBOX {
-      transition: 0.3s;
-    }
+.navBOX {
+  transition: 0.3s;
+}
 
-    .navBOX:hover {
-      transform: scale(1.1);
-      transition: 0.3s;
-    }
+.navBOX:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
 
-    nav img {
-      height: 8vh;
-      width: 8vh;
-    }
+nav img {
+  height: 8vh;
+  width: 8vh;
+}
 
-    .fejlec {
-      padding-top: 25vh;
-      padding-bottom: 25vh;
-      
-    }
+.fejlec {
+  padding-top: 25vh;
+  padding-bottom: 25vh;
 
-    .bg-fejlec {
-      background-image: url(/fejlec.png);
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      
-    }
+}
+
+.bg-fejlec {
+  background-image: url(/fejlec.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+}
+
+.kartya {
+  width: 31.5%;
+  max-width: 100%;
+}
+
+.piktogram {
+  width: 50vh;
+}
+
+.hirdetes {
+  padding-top: 45vh;
+  padding-bottom: 5vh;
+  background-image: url('/assets/images/berlesfejlec.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 207vh;
+}
+
+.doboz{
+  transition: 0.3s;
+}
+.doboz:hover{
+  transform: scale(1.05);
+  color: white!important;
+  transition: 0.3s;
+  
+}
+
+
+.social-icon {
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icon:hover {
+  color: #fcd34d;
+  transform: scale(1.2);
+}
+
+footer p {
+  line-height: 1.6;
+}
+
+/* ----- Responsive ----- */
+
+
+@media (max-width: 1200px) {
+   .hirdetes {
+    padding-top: 45vh;
+    padding-bottom: 5vh;
+    background-image: url('/assets/images/berlesfejlec.png');
+    background-repeat: no-repeat;
+    background-position: -90vh;
+    background-size: 207vh;
+}
+
+}
+
+@media (max-width: 992px) {
+  .bg-fejlec {
+    background-image: url('/assets/images/berlesfejlec.png');
+    background-position: center;
+    background-size: 75vh;
+  }
+
+  .kartya {
+    width: 98%;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1102px) {
+  .bg-fejlec {
+    background-size: 120vh;
+  }
+}
+
+@media (max-width: 540px) {
+
 
     .kartya {
-      width: 31.5%;
-      max-width: 100%;
-    }
-
-    .piktogram {
-      width: 50vh;
-    }
-
-    .hirdetes {
-      padding-top: 25vh;
-      padding-bottom: 25vh;
-      background-color: azure;
-    }
-
-    .social-icon {
-      transition: transform 0.3s, color 0.3s;
-    }
-
-    .social-icon:hover {
-      color: #fcd34d;
-      transform: scale(1.2);
-    }
-
-    footer p {
-      line-height: 1.6;
-    }
-
-    /* ----- Responsive ----- */
-    @media (max-width: 992px) {
-      .bg-fejlec {
-        background-image: url(/fejlec_mobil.png);
-        background-position: center;
-        background-size: 75vh;
-      }
-
-      .kartya {
-        width: 98%;
-      }
-    }
-
-    @media (min-width: 992px) and (max-width: 1102px) {
-      .bg-fejlec {
-        background-size: 120vh;
-      }
-    }
-
-    @media (max-width: 540px) {
-      .kartya {
         width: 95%;
-      }
     }
- 
+     .hirdetes {
+    padding-top: 45vh;
+    padding-bottom: 5vh;
+    background-image:url('/assets/images/berlesfejlec.png');
+    background-repeat: no-repeat;
+    background-position: -115vh;
+    background-size: 207vh;
+}
+
+}

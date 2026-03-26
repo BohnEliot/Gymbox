@@ -23,6 +23,7 @@ Route::get('/kontener/smallerarea/{negyzetMeter}',[KontenerController::class,'ge
 
 Route::get('/felhasznalo',[FelhasznaloController::class,'index']);
 Route::get('/felhasznalo/{id}',[FelhasznaloController::class,'getById']);
+Route::get('/edzok-edzestervek', [FelhasznaloController::class, 'edzokEdzestervekkel']);
 Route::post('/felhasznalo',[FelhasznaloController::class,'store']);
 Route::put('/felhasznalo/{id}',[FelhasznaloController::class,'update']);
 Route::delete('/felhasznalo/{id}',[FelhasznaloController::class,'destroy']);

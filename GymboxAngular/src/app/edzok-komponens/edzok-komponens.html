@@ -1,0 +1,45 @@
+<section class="bg-dark text-light min-vh-100 py-5">
+  <div class="container py-5 my-5">
+
+    <div class="text-center mb-5">
+      <h1 class="text-warning fw-bold">EDZŐK ÉS EDZÉSTERVEK</h1>
+    </div>
+
+    <div *ngIf="betoltes" class="text-center text-secondary fs-4">
+      Betöltés...
+    </div>
+
+    <div *ngIf="hiba" class="alert alert-danger text-center">
+      {{ hiba }}
+    </div>
+
+    <div class="row g-4" *ngIf="!betoltes && !hiba">
+      <div class="col-lg-6" *ngFor="let edzo of edzok">
+        <div class="bg-black p-4 rounded-4 h-100 border border-warning-subtle">
+
+          <h3 class="text-warning fw-bold mb-3">{{ edzo.nev }}</h3>
+          <p class="text-secondary">{{ edzo.email }}</p>
+
+          <div *ngIf="edzo.edzestervek?.length; else nincsTerv">
+            <div class="p-3 rounded-3 bg-dark mb-3" *ngFor="let terv of edzo.edzestervek">
+              <p *ngIf="terv.megjegyzes"><strong>Megjegyzés:</strong> {{ terv.megjegyzes }}</p>
+              <p *ngIf="terv.hetfo"><strong>Hétfő:</strong> {{ terv.hetfo }}</p>
+              <p *ngIf="terv.kedd"><strong>Kedd:</strong> {{ terv.kedd }}</p>
+              <p *ngIf="terv.szerda"><strong>Szerda:</strong> {{ terv.szerda }}</p>
+              <p *ngIf="terv.csutortok"><strong>Csütörtök:</strong> {{ terv.csutortok }}</p>
+              <p *ngIf="terv.pentek"><strong>Péntek:</strong> {{ terv.pentek }}</p>
+              <p *ngIf="terv.szombat"><strong>Szombat:</strong> {{ terv.szombat }}</p>
+              <p *ngIf="terv.vasarnap"><strong>Vasárnap:</strong> {{ terv.vasarnap }}</p>
+            </div>
+          </div>
+
+          <ng-template #nincsTerv>
+            <p class="text-secondary mb-0">Ehhez az edzőhöz még nincs edzésterv.</p>
+          </ng-template>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

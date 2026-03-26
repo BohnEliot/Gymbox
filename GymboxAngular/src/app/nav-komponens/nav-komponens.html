@@ -49,6 +49,11 @@
           </ng-container>
 
           <ng-container *ngIf="auth.loggedinFelhasznalo() as user">
+             <li class="nav-item p-3 fs-3 border-start border-white my-1">
+              <a routerLink="/sajat-berleseim" class="nav-link text-white navBOX" (click)="closeMenu()">
+                Bérléseim
+              </a>
+            </li>
             <li class="nav-item p-3 fs-3 border-start border-white my-1">
               <a routerLink="/loggedin" class="nav-link text-warning navBOX" (click)="closeMenu()">
                 Szia {{ user.nev }}
@@ -67,11 +72,7 @@
               </a>
             </li>
 
-            <li class="nav-item p-3 fs-3 border-start border-white my-1">
-              <a routerLink="/sajat-berleseim" class="nav-link text-white navBOX" (click)="closeMenu()">
-                Bérléseim
-              </a>
-            </li>
+           
 
             <li class="nav-item p-3 fs-3 border-start border-white my-1">
               <button class="btn btn-outline-warning" (click)="logout()">

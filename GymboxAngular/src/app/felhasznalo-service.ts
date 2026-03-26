@@ -14,6 +14,9 @@ export class FelhasznaloService {
   getAll(): Observable<Felhasznalo[]> {
     return this.http.get<Felhasznalo[]>(`${API_URL}/felhasznalo`);
   }
+  getEdzok(): Observable<Felhasznalo[]> {
+    return this.http.get<Felhasznalo[]>(`${API_URL}/edzok-edzestervek`);
+  }
 
   getById(id: number): Observable<Felhasznalo> {
     return this.http.get<Felhasznalo>(`${API_URL}/felhasznalo/${id}`);

@@ -160,6 +160,34 @@ export class BerlesKomponens {
   return this.edzestervek.find(terv => terv.id === this.selectedEdzestervId) || null;
 }
 
+get selectedKep(): string {
+  const nev = this.selectedCsomag?.kontener?.kontenerNev?.toLowerCase() || '';
+
+  if (nev.includes('kardió') || nev.includes('kardio')) {
+    return 'assets/kontener-kepek/kardio-kontener.png';
+  }
+
+  if (nev.includes('Kondi') || nev.includes('kondi')) {
+    return 'assets/kontener-kepek/erosito-kontener.png';
+  }
+
+  if (nev.includes('vegyes')) {
+    return 'assets/kontener-kepek/vegyes-kontener.png';
+  }
+
+  return 'assets/kontener-kepek/alap-kontener.png';
+}
+
+onImageError(event: Event): void {
+  const img = event.target as HTMLImageElement;
+
+  if (!img.src.includes('alap-kontener.png')) {
+    img.src = 'assets/kontener-kepek/alap-kontener.png';
+  }
+}
+
+
+
   kosarba(): void {
   if (!this.selectedCsomag) {
     return;
