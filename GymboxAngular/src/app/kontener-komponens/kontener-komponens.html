@@ -3,7 +3,7 @@
 
     <div class="text-center mb-5">
       <h1 class="text-warning fw-bold display-5">KONTÉNEREK</h1>
-      <p class="text-secondary">Válaszd ki a számodra ideális edzőkonténert</p>
+    
     </div>
 
     <div *ngIf="betoltes" class="text-center text-secondary fs-4 py-5">
@@ -19,7 +19,7 @@
       <div class="col-lg-6 col-12" *ngIf="kiemeltKontener as kontener">
         <div class="card bg-dark text-light border-0 shadow-lg h-100 overflow-hidden kontener-card">
           <div class="position-relative">
-            <img src="assets/gym_gep.jpg" class="card-img-top kontener-nagy-kep" [alt]="kontener.kontenerNev">
+            <img [src]="getKontenerKep(kontener)" class="card-img-top" [alt]="kontener.kontenerNev">
           </div>
 
           <div class="card-body">
@@ -40,7 +40,8 @@
 
           <div class="col-md-6 col-12" *ngFor="let kontener of tobbiKontener">
             <div class="card bg-dark text-light border-0 shadow h-100 kontener-card">
-              <img src="assets/gym_gep.jpg" class="card-img-top kontener-kis-kep" [alt]="kontener.kontenerNev">
+              <img [src]="getKontenerKep(kontener)" class="card-img-top" [alt]="kontener.kontenerNev">
+
               <div class="card-body text-center">
                 <h6 class="text-warning fw-bold">{{ kontener.kontenerNev }}</h6>
                 <p class="small text-secondary">

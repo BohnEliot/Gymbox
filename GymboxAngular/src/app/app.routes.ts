@@ -16,6 +16,7 @@ import { adminGuard } from './admin-guard';
 import { AdminKomponens } from './admin-komponens/admin-komponens';
 import { EdzestervKeszitoKomponens } from './edzesterv-keszito-komponens/edzesterv-keszito-komponens';
 import { edzoGuard } from './edzo-guard-guard';
+import { EdzokKomponens } from './edzok-komponens/edzok-komponens';
 
 
 export const routes: Routes = [
@@ -32,6 +33,7 @@ export const routes: Routes = [
   { path: 'kosar', component: KosarKomponens },
   { path: 'gepek', component: GepKomponens },
   { path: 'kontenerek', component: KontenerKomponens },
+  { path: 'edzok', component: EdzokKomponens },
   { path: 'sajat-berleseim', component: SajatBerlesekKomponens },
   { path: 'admin', component: AdminKomponens, canActivate: [adminGuard] },
   { path: 'edzesterv-keszites', component: EdzestervKeszitoKomponens, canActivate: [edzoGuard] },

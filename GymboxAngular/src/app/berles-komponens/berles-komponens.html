@@ -65,7 +65,7 @@
       </div>
 
       <div class="col-lg-5 text-center">
-        <div class="kep-panel h-100 d-flex align-items-center justify-content-center">
+        <div class="kep-panel  d-flex align-items-center justify-content-center">
           <img [src]="selectedKep" class="img-fluid kontener-kep" alt="Gymbox konténer"
             (error)="onImageError($event)" />
         </div>
@@ -90,10 +90,10 @@
         </div>
 
         <div class="mb-4">
-          <label class="form-label text-white fw-bold">Edzésterv választása</label>
-          <select class="form-select" [(ngModel)]="selectedEdzestervId">
-            <option [ngValue]="null">Válassz edzéstervet</option>
-            <option *ngFor="let terv of edzestervek" [ngValue]="terv.id">
+          <label class="form-label text-warning fw-bold">Edzésterv választása</label>
+          <select class="form-select bg-black text-white bg-opacity-50" [(ngModel)]="selectedEdzestervId">
+            <option class="bg-black" [ngValue]="null">Válassz edzéstervet</option>
+            <option class="bg-black" *ngFor="let terv of edzestervek" [ngValue]="terv.id">
               {{ terv.szerzo?.nev }} edzésterve
             </option>
           </select>

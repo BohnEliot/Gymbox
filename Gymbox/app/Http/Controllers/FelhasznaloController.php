@@ -72,6 +72,12 @@ public function store(Request $request)
         }
         return response()->json(["Hiba!"=>"Hibás email vagy jelszó"],401);
     }
+public function edzokEdzestervekkel()
+{
+    return Felhasznalo::where('edzoE', true)
+        ->with('edzestervek')
+        ->get();
+}
 
     public function destroy($id)
     {

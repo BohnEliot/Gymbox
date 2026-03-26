@@ -35,4 +35,25 @@ export class KontenerKomponens implements OnInit {
       }
     });
   }
+getKontenerKep(kontener: Kontener): string {
+    const nev = kontener.kontenerNev?.toLowerCase() || '';
+
+    if (nev.includes('Kardió') || nev.includes('kardió')) {
+      return 'assets/kontener-kepek/kardio40.png';
+    }
+    if (nev.includes('Vegyes') || nev.includes('vegyes')) {
+      return 'assets/kontener-kepek/vegyes40.png';
+    }
+     if (nev.includes('40') || nev.includes('40')) {
+      return 'assets/kontener-kepek/kondi40.png';
+    }
+         if (nev.includes('45') || nev.includes('40')) {
+      return 'assets/kontener-kepek/kondi45.png';
+    }
+
+
+
+    return 'assets/gep-kepek/bodysolid.png';
+  }
+
 }
