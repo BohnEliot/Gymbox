@@ -41,6 +41,7 @@ Route::get('/gepcsomag/{id}',[GepcsomagController::class,'getById']);
 Route::get('/edzesterv', [EdzestervController::class, 'index']);
 Route::get('/edzesterv/{id}', [EdzestervController::class, 'getById']);
 Route::post('/edzesterv', [EdzestervController::class, 'store']);
+Route::delete('/edzesterv/{id}', [EdzestervController::class, 'destroy']);
 
 Route::get('/csomag',[CsomagController::class,'index']);
 Route::get('/csomag/{id}',[CsomagController::class,'getById']);

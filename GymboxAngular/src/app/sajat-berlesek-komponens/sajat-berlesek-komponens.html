@@ -1,4 +1,4 @@
-<section class="container py-5 my-5 text-light">
+<section class="container py-5 my-0 my-md-5 text-light">
   <h1 class="text-warning text-center fw-bold mb-5">Saját bérléseim</h1>
 
   <div *ngIf="betoltes" class="text-center text-secondary fs-4">
@@ -47,6 +47,7 @@
           <p class="mb-0"><strong>Vasárnap:</strong> {{ berles.csomag_adat?.edzesterv?.vasarnap }}</p>
         </div>
         <button class="btn btn-outline-danger mt-3" (click)="lemondas(berles.id)">Bérlés lemondása</button>
+        
       </div>
     </div>
   </div>

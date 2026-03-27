@@ -3,11 +3,15 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BerlesService } from '../berles-service';
 import { AuthService } from '../auth-service';
 import { Berles } from '../models/berles.model';
+import { SnackbarService } from '../snackbar-service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogKomponens } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-sajat-berlesek-komponens',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatSnackBarModule, MatDialogModule],
   templateUrl: './sajat-berlesek-komponens.html',
   styleUrl: './sajat-berlesek-komponens.css'
 })
@@ -19,7 +23,9 @@ export class SajatBerlesekKomponens implements OnInit {
   constructor(
     private berlesService: BerlesService,
     public auth: AuthService,
-    private cdr:ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private snackbar: SnackbarService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +42,6 @@ export class SajatBerlesekKomponens implements OnInit {
         this.berlesek = adatok;
         this.betoltes = false;
         this.cdr.detectChanges();
-
       },
       error: (err) => {
         console.error(err);
@@ -57,22 +62,30 @@ export class SajatBerlesekKomponens implements OnInit {
   }
 
   lemondas(berlesId: number): void {
-  const biztos = confirm('Biztosan le szeretnéd mondani ezt a bérlést?');
+    const dialogRef = this.dialog.open(ConfirmDialogKomponens, {
+      width: '400px',
+      data: {
+        title: 'Bérlés lemondása',
+        message: 'Biztosan le szeretnéd mondani ezt a bérlést?'
+      }
+    });
 
-  if (!biztos) {
-    return;
+    dialogRef.afterClosed().subscribe((eredmeny) => {
+      if (!eredmeny) {
+        return;
+      }
+
+      this.berlesService.delete(berlesId).subscribe({
+        next: () => {
+          this.berlesek = this.berlesek.filter(b => b.id !== berlesId);
+          this.snackbar.success('A bérlés sikeresen le lett mondva.');
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error(err);
+          this.snackbar.error('Nem sikerült lemondani a bérlést.');
+        }
+      });
+    });
   }
-
-  this.berlesService.delete(berlesId).subscribe({
-    next: () => {
-      this.berlesek = this.berlesek.filter(b => b.id !== berlesId);
-      alert('A bérlés sikeresen le lett mondva.');
-      this.cdr.detectChanges();
-    },
-    error: (err) => {
-      console.error(err);
-      alert('Nem sikerült lemondani a bérlést.');
-    }
-  });
-}
 }

@@ -19,7 +19,26 @@ nav img{
 }
 
 
+.snackbar-success .mdc-snackbar__surface {
+  background-color: #198754 !important;
+  color: white !important;
+}
 
+.snackbar-error .mdc-snackbar__surface {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.snackbar-info .mdc-snackbar__surface {
+  background-color: #212529 !important;
+  color: white !important;
+}
+
+.snackbar-success .mat-mdc-button,
+.snackbar-error .mat-mdc-button,
+.snackbar-info .mat-mdc-button {
+  color: #fff !important;
+}
 
 
 
@@ -70,3 +89,6 @@ nav img{
 
 
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

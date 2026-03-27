@@ -57,10 +57,10 @@ public function store(Request $request)
                 ]
                 );
         if($validator->fails()){
-            return response()->json(["Hiba!"=> "Hiányzik egy vagy több kötelező adat"],404);
+            return response()->json(["Hiba!"=> "Hiányzik egy vagy több kötelező adat"],422);
         }
         $felhasznalo->update($request->all());
-        return response()->json($felhasznalo,200);
+        return response()->json($felhasznalo,201);
 
     }
 

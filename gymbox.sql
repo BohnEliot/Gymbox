@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 17. 18:56
+-- Létrehozás ideje: 2026. Már 27. 14:24
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -32,7 +32,9 @@ CREATE TABLE `berlesek` (
   `felhasznalo_id` bigint(20) UNSIGNED DEFAULT NULL,
   `csomag` bigint(20) UNSIGNED NOT NULL,
   `berlesiIdo` int(11) NOT NULL,
-  `ar` int(11) NOT NULL
+  `ar` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'folyamatban',
+  `edzesterv_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -54,9 +56,9 @@ CREATE TABLE `csomagok` (
 --
 
 INSERT INTO `csomagok` (`id`, `kontener_id`, `gepcsomag_id`, `ertekeles_id`, `edzesterv_id`) VALUES
-(1, 2, 1, 3, 1),
-(2, 1, 2, 4, 2),
-(3, 3, 3, 6, 3),
+(1, 2, 1, 3, NULL),
+(2, 1, 2, 4, NULL),
+(3, 3, 3, 6, NULL),
 (4, 3, 4, 4, NULL),
 (5, 4, 5, 6, NULL);
 
@@ -84,9 +86,7 @@ CREATE TABLE `edzestervek` (
 --
 
 INSERT INTO `edzestervek` (`id`, `felhasznalo_id`, `megjegyzes`, `hetfo`, `kedd`, `szerda`, `csutortok`, `pentek`, `szombat`, `vasarnap`) VALUES
-(1, 1, 'Kezdő teljes testes program', 'Mell + tricepsz', 'Hát + bicepsz', 'Pihenő', 'Láb', 'Váll + has', 'Kardió', 'Pihenő'),
-(2, 2, 'Haladó erősítő program', 'Mell', 'Hát', 'Láb', 'Váll', 'Kar', 'Kardió', 'Pihenő'),
-(3, 1, 'Zsírégető program', 'HIIT + has', 'Láb + kardió', 'Pihenő', 'Felsőtest', 'Teljes test', 'Kardió', 'Pihenő');
+(1, 2, 'Kezdő teljes testes program', 'Mell + tricepsz', 'Hát + bicepsz', 'Pihenő', 'Láb', 'Váll + has', 'Kardió', 'Pihenő');
 
 -- --------------------------------------------------------
 
@@ -127,6 +127,7 @@ CREATE TABLE `felhasznalok` (
   `email` varchar(255) NOT NULL,
   `jelszo` varchar(255) NOT NULL,
   `edzoE` tinyint(1) NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
   `ertekeles_id` bigint(20) UNSIGNED DEFAULT NULL,
   `kontener_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -135,10 +136,11 @@ CREATE TABLE `felhasznalok` (
 -- A tábla adatainak kiíratása `felhasznalok`
 --
 
-INSERT INTO `felhasznalok` (`id`, `nev`, `email`, `jelszo`, `edzoE`, `ertekeles_id`, `kontener_id`) VALUES
-(1, 'Bohn Eliot Konstantin', 'bohneliot@gmail.com', 'ezajelszo', 1, 1, 3),
-(2, 'Kiss Dávid', 'kissdavid@gmail.com', 'ezajelszo', 1, 4, 2),
-(3, 'Teszt Vásárló', 'teszt@gmail.com', 'ezajelszo', 0, NULL, NULL);
+INSERT INTO `felhasznalok` (`id`, `nev`, `email`, `jelszo`, `edzoE`, `isAdmin`, `ertekeles_id`, `kontener_id`) VALUES
+(1, 'Admin User', 'admin@gymbox.hu', 'admin123', 0, 1, NULL, NULL),
+(2, 'Bohn Eliot Konstantin', 'bohneliot@gmail.com', 'ezajelszo', 1, 0, 1, 3),
+(3, 'Kiss Dávid', 'kissdavid@gmail.com', 'ezajelszo', 1, 0, 4, 2),
+(4, 'Teszt Vásárló', 'teszt@gmail.com', 'ezajelszo', 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -160,10 +162,10 @@ CREATE TABLE `gepcsomagok` (
 --
 
 INSERT INTO `gepcsomagok` (`id`, `gepId1`, `gepId2`, `gepId3`, `gepId4`, `gepId5`) VALUES
-(1, 1, 2, 3, 4, 5),
-(2, 4, 5, 6, 7, 8),
-(3, 10, 11, 12, 14, 9),
-(4, 20, 19, 18, 15, 6),
+(1, 7, 6, 9, 4, 5),
+(2, 4, 17, 10, 7, 8),
+(3, 10, 11, 12, 14, 29),
+(4, 20, 19, 18, 15, 22),
 (5, 16, 13, 11, 17, 3),
 (6, 30, 28, 29, 27, 26),
 (7, 21, 22, 23, 24, 25);
@@ -198,14 +200,14 @@ INSERT INTO `gepek` (`id`, `nev`, `ar`, `marka`, `kategoria`, `gepSuly`, `gepHos
 (5, 'BRX-R65 COMFORT háttámlás szobakerékpár', 169000, 'Toorx', 'Kardiovaszkuláris', 33, 130, 63, 97),
 (6, 'ERX-400 elliptikus tréner', 369000, 'Toorx', 'Kardiovaszkuláris', 64, 150, 59, 179),
 (7, 'Rower Sea 70 evezőgép', 239000, 'Toorx', 'Kardiovaszkuláris', 26, 186, 44, 104),
-(8, 'ERX-400 elliptikus tréner', 369000, 'Toorx', 'Kardiovaszkuláris', 64, 150, 59, 179),
+(8, 'ERX-500 elliptikus tréner', 369000, 'Toorx', 'Kardiovaszkuláris', 64, 150, 59, 179),
 (9, 'RWX Air 5000 evezőgép', 549000, 'Toorx', 'Kardiovaszkuláris', 52, 237, 63, 113),
 (10, 'MSX-60 kombinált gép', 409900, 'Toorx', 'Kondicionális erősítő', 142, 113, 93, 206),
 (11, 'Platinum V-series melltől / vállból nyomó gép', 999900, 'Tunturi', 'Kondicionális erősítő', 244, 190, 127, 155),
 (12, 'Platinum V-series combfeszítő gép', 889900, 'Tunturi', 'Kondicionális erősítő', 174, 130, 98, 155),
 (13, 'Platinum V-series tárogató / hátsóváll gép', 939900, 'Tunturi', 'Kondicionális erősítő', 242, 130, 117, 208),
 (14, 'MSX-5000 lábtoló', 449900, 'Toorx', 'Kondicionális erősítő', 101, 131, 196, 107),
-(15, 'Platinum V-series combfeszítő / combhajlító gép', 949900, 'Tunturi', 'Kondicionális erősítő', 230, 152, 82, 215),
+(15, 'Platinum V-series combhajlító gép', 949900, 'Tunturi', 'Kondicionális erősítő', 230, 152, 82, 215),
 (16, 'Platinum V-series vállból nyomó gép', 949900, 'Tunturi', 'Kondicionális erősítő', 219, 135, 135, 155),
 (17, 'MSX-50 kombinált gép', 349900, 'Toorx', 'Kondicionális erősítő', 134, 175, 105, 202),
 (18, 'Platinum V-series csípőemelő farizom gép', 959900, 'Tunturi', 'Kondicionális erősítő', 226, 195, 123, 155),
@@ -215,7 +217,7 @@ INSERT INTO `gepek` (`id`, `nev`, `ar`, `marka`, `kategoria`, `gepSuly`, `gepHos
 (22, 'SM80 többfunciós Smith erőkeret', 399900, 'Tunturi', 'Kondicionális erősítő', 124, 190, 184, 209),
 (23, 'Tytan 17 Otthoni Lapsúlyos Kondigép', 539000, 'HMS', 'Kondicionális erősítő', 214, 200, 215, 210),
 (24, 'kombinált edzőkeret', 699000, 'Cyklop', 'Kondicionális erősítő', 139, 199, 150, 220),
-(25, 'G2B kombinált edzőgép', 619000, 'Body-Solid', 'Kondicionális erősítő', 204, 191, 206, 212),
+(25, 'G2B Multi', 619000, 'Body-Solid', 'Kondicionális erősítő', 204, 191, 206, 212),
 (26, 'Tytan12 Multifunkciós kondigép', 229900, 'HMS', 'Kondicionális erősítő', 142, 160, 225, 212),
 (27, 'Tytan10R Otthoni Multifunkciós kondigép', 274900, 'HMS', 'Kondicionális erősítő', 179, 274, 162, 203),
 (28, 'Crossover 500 Otthoni Keresztcsiga', 299000, 'Elite Fitness ', 'Kondicionális erősítő', 204, 255, 62, 212),
@@ -246,10 +248,10 @@ CREATE TABLE `kontenerek` (
 --
 
 INSERT INTO `kontenerek` (`id`, `kontenerNev`, `sulyKG`, `belSzelesseg`, `kulSzelesseg`, `belMagassag`, `belHosszusag`, `kulMagassag`, `kulHosszusag`, `negyzetMeter`) VALUES
-(1, '20\' normál', 2300, 2.35, 2.43, 2.39, 5.89, 2.59, 6.09, 13.86),
-(2, '40\' normál', 3750, 2.35, 2.43, 2.68, 12.03, 2.59, 12.19, 28.27),
-(3, '40\' magas', 3940, 2.35, 2.43, 2.69, 12.03, 2.89, 12.19, 28.27),
-(4, '45\' magas', 4820, 2.35, 2.43, 2.69, 13.55, 2.89, 13.71, 31.188);
+(1, '20\'láb magas Vegyes', 2300, 2.35, 2.43, 2.39, 5.89, 2.59, 6.09, 13.86),
+(2, '40\'láb magas Kardió', 3750, 2.35, 2.43, 2.68, 12.03, 2.59, 12.19, 28.27),
+(3, '40\'láb magas Kondicionális', 3940, 2.35, 2.43, 2.69, 12.03, 2.89, 12.19, 28.27),
+(4, '45\'láb magas Kondicionális', 4820, 2.35, 2.43, 2.69, 13.55, 2.89, 13.71, 31.188);
 
 -- --------------------------------------------------------
 
@@ -276,7 +278,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2026_01_26_095500_create_edzestervs_table', 1),
 (7, '2026_01_26_095600_create_csomags_table', 1),
 (8, '2026_01_26_101501_create_berles_table', 1),
-(9, '2026_03_17_134004_add_felhasznalo_id_to_berlesek_table', 1);
+(9, '2026_03_17_134004_add_felhasznalo_id_to_berlesek_table', 1),
+(10, '2026_03_22_100848_add_is_admin_to_felhasznalok_table', 1),
+(11, '2026_03_22_103732_add_status_to_berlesek_table', 1),
+(12, '2026_03_23_131751_add_edzesterv_id_to_berlesek_table', 1);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -288,7 +293,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 ALTER TABLE `berlesek`
   ADD PRIMARY KEY (`id`),
   ADD KEY `berlesek_csomag_foreign` (`csomag`),
-  ADD KEY `berlesek_felhasznalo_id_foreign` (`felhasznalo_id`);
+  ADD KEY `berlesek_felhasznalo_id_foreign` (`felhasznalo_id`),
+  ADD KEY `berlesek_edzesterv_id_foreign` (`edzesterv_id`);
 
 --
 -- A tábla indexei `csomagok`
@@ -360,7 +366,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT a táblához `berlesek`
 --
 ALTER TABLE `berlesek`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT a táblához `csomagok`
@@ -384,7 +390,7 @@ ALTER TABLE `ertekelesek`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT a táblához `gepcsomagok`
@@ -408,7 +414,7 @@ ALTER TABLE `kontenerek`
 -- AUTO_INCREMENT a táblához `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -419,6 +425,7 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `berlesek`
   ADD CONSTRAINT `berlesek_csomag_foreign` FOREIGN KEY (`csomag`) REFERENCES `csomagok` (`id`),
+  ADD CONSTRAINT `berlesek_edzesterv_id_foreign` FOREIGN KEY (`edzesterv_id`) REFERENCES `edzestervek` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `berlesek_felhasznalo_id_foreign` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalok` (`id`) ON DELETE SET NULL;
 
 --
