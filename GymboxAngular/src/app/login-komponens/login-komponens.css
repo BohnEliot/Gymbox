@@ -9,3 +9,10 @@
 .btn-primary, .btn-success {
   border-radius: 6px;
 }
+
+@media (min-width: 800px) and (max-width: 1102px) {
+ .felulet{
+    scale: 1.7;
+    padding-top: 20vh   ;
+ }
+}

@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+/* háttér */
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: #111 !important;
+  color: white !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+}
+
+/* szöveg */
+.text-light-emphasis {
+  color: #cfcfcf;
+}
+
+/* gomb hover finomítás */
+button.btn-warning:hover {
+  background-color: #ffc107;
+  transform: scale(1.03);
+}
+
+button.btn-outline-light:hover {
+  background-color: #fff;
+  color: #000;
+}

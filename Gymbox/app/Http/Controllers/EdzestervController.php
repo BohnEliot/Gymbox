@@ -46,5 +46,14 @@ class EdzestervController extends Controller
 
         return response()->json($edzesterv->load('szerzo'), 201);
     }
+
+    public function destroy($id){
+        $edzesterv=Edzesterv::find($id);
+        if (is_null($edzesterv)) {
+            return response()->json(["Hiba!"=>"Nem található edzésterv id!"],404);
+        }
+        $edzesterv->delete();
+        return response()->json(["Sikeres törlés"],200);
+    }
     
 }

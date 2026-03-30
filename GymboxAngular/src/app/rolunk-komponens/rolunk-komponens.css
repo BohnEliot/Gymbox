@@ -102,7 +102,7 @@ footer p {
 
 @media (max-width: 992px) {
   .bg-fejlec {
-    background-image: url('/assets/images/berlesfejlec.png');
+    background-image: url('/assets/images/fejlec_mobil.png');
     background-position: center;
     background-size: 75vh;
   }

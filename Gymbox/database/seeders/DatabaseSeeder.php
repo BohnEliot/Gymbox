@@ -126,7 +126,7 @@ foreach ($felhasznalok as $value) {
 
          $edzestervek = [
             [
-                'felhasznalo_id' => 1,
+                'felhasznalo_id' => 2,
                 'megjegyzes' => 'Kezdő teljes testes program',
                 'hetfo' => 'Mell + tricepsz',
                 'kedd' => 'Hát + bicepsz',
@@ -148,7 +148,7 @@ foreach ($felhasznalok as $value) {
                 'vasarnap' => 'Pihenő',
             ],
             [
-                'felhasznalo_id' => 1,
+                'felhasznalo_id' => 3,
                 'megjegyzes' => 'Zsírégető program',
                 'hetfo' => 'HIIT + has',
                 'kedd' => 'Láb + kardió',
@@ -167,9 +167,9 @@ foreach ($felhasznalok as $value) {
 
         $csomagok=
         [
-            [2,1,3,1],
-            [1,2,4,2],
-            [3,3,6,3],
+            [2,1,3,null],
+            [1,2,4,null],
+            [3,3,6,null],
             [3,4,4,null],
             [4,5,6,null]
         ];

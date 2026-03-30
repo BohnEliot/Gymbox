@@ -1,67 +1,134 @@
 <section>
-  <div class="container my-5 py-5">
+  <div class="container my-0 mt-lg-5 py-5">
 
     <div class="row">
-      <div class="col-12 text-center text-warning fw-bold mb-5">
+      <div class="col-12 text-center text-warning fw-bold mb-4">
         <h1>ADMIN</h1>
       </div>
     </div>
 
-    <div class="row mb-4 text-white">
-      <div class="col-12 col-md-4 mb-3">
-        <div class="bg-black p-3 rounded-4 text-center">
-          <h6>Összes rendelés</h6>
-          <h2>{{ osszesRendeles }}</h2>
-        </div>
-      </div>
+    <div class="row mb-4">
+      <div class="col-12 d-flex justify-content-center gap-3 flex-wrap">
+        <button class="btn" [ngClass]="aktivTab === 'berlesek' ? 'btn-warning text-dark' : 'btn-outline-light'"
+          (click)="setTab('berlesek')">
+          Bérlések
+        </button>
 
-      <div class="col-12 col-md-4 mb-3">
-        <div class="bg-black p-3 rounded-4 text-center">
-          <h6>Folyamatban</h6>
-          <h2 class="text-warning">{{ folyamatbanDb }}</h2>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-4 mb-3">
-        <div class="bg-black p-3 rounded-4 text-center">
-          <h6>Kézbesítve</h6>
-          <h2 class="text-success">{{ kezbesitveDb }}</h2>
-        </div>
+        <button class="btn" [ngClass]="aktivTab === 'edzestervek' ? 'btn-warning text-dark' : 'btn-outline-light'"
+          (click)="setTab('edzestervek')">
+          Edzéstervek
+        </button>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-12 mb-3" *ngFor="let b of berlesek">
-        <div
-          class="bg-black text-white p-3 rounded-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-
-          <div>
-            <h5 class="mb-1">
-              {{ b.felhasznalo?.nev }} - {{ b.csomag_adat?.kontener?.kontenerNev || ('Csomag #' + b.csomag) }}
-            </h5>
-            <span class="badge me-5" [ngClass]="{
-    'bg-success': b.status === 'kesz',
-    'bg-warning text-dark': b.status === 'folyamatban'
-  }">
-              {{ b.status }}
-            </span>
-            <button class="btn btn-sm btn-outline-light me-2" (click)="toggleStatus(b.id)">
-              Állapot váltás
-            </button>
+    @if (aktivTab === 'berlesek') {
+    <div>
+      <div class="row mb-4 text-white">
+        <div class="col-12 col-md-4 mb-3">
+          <div class="bg-black p-3 rounded-4 text-center">
+            <h6>Összes rendelés</h6>
+            <h2>{{ osszesRendeles }}</h2>
           </div>
+        </div>
 
-          <button class="btn btn-outline-danger btn-sm mt-3 mt-md-0" (click)="deleteBerles(b.id)"
-            [disabled]="b.status === 'folyamatban'" [ngClass]="{
+        <div class="col-12 col-md-4 mb-3">
+          <div class="bg-black p-3 rounded-4 text-center">
+            <h6>Folyamatban</h6>
+            <h2 class="text-warning">{{ folyamatbanDb }}</h2>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4 mb-3">
+          <div class="bg-black p-3 rounded-4 text-center">
+            <h6>Kézbesítve</h6>
+            <h2 class="text-success">{{ kezbesitveDb }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 mb-3" *ngFor="let b of berlesek">
+          <div
+            class="bg-black text-white p-3 rounded-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+
+            <div>
+              <h5 class="mb-1">
+                {{ b.felhasznalo?.nev }} - {{ b.csomag_adat?.kontener?.kontenerNev || ('Csomag #' + b.csomag) }}
+              </h5>
+
+              <span class="badge me-3" [ngClass]="{
+                  'bg-success': b.status === 'kesz',
+                  'bg-warning text-dark': b.status === 'folyamatban'
+                }">
+                {{ b.status }}
+              </span>
+
+              <button class="btn btn-sm btn-outline-light me-2 mt-2 mt-md-0" (click)="toggleStatus(b.id)">
+                Állapot váltás
+              </button>
+            </div>
+
+            <button class="btn btn-outline-danger btn-sm mt-3 mt-md-0" (click)="confirmBerlesTorles(b.id)"
+              [disabled]="b.status === 'folyamatban'" [ngClass]="{
     'opacity-50': b.status === 'folyamatban',
     'cursor-not-allowed': b.status === 'folyamatban'
   }">
+              <i class="bi bi-trash"></i>
+            </button>
 
-            <i class="bi bi-trash"></i>
-
-          </button>
-
+          </div>
         </div>
       </div>
     </div>
+    }
+
+    @if (aktivTab === 'edzestervek') {
+    <div>
+      <div class="row mb-4 text-white">
+        <div class="col-12 col-md-4 mb-3">
+          <div class="bg-black p-3 rounded-4 text-center">
+            <h6>Összes edzésterv</h6>
+            <h2>{{ osszesEdzesterv }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 mb-3" *ngFor="let e of edzestervek">
+          <div class="bg-black text-white p-4 rounded-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
+              <div class="flex-grow-1">
+                <h5 class="text-warning mb-3">
+                  {{ e.szerzo?.nev || ('Felhasználó #' + e.felhasznalo_id) }} edzésterve
+                </h5>
+
+                <div class="row">
+                  <div class="col-12 col-md-6 mb-2"><strong>Hétfő:</strong> {{ e.hetfo }}</div>
+                  <div class="col-12 col-md-6 mb-2"><strong>Kedd:</strong> {{ e.kedd }}</div>
+                  <div class="col-12 col-md-6 mb-2"><strong>Szerda:</strong> {{ e.szerda }}</div>
+                  <div class="col-12 col-md-6 mb-2"><strong>Csütörtök:</strong> {{ e.csutortok }}</div>
+                  <div class="col-12 col-md-6 mb-2"><strong>Péntek:</strong> {{ e.pentek }}</div>
+                  <div class="col-12 col-md-6 mb-2"><strong>Szombat:</strong> {{ e.szombat }}</div>
+                  <div class="col-12 col-md-6 mb-2"><strong>Vasárnap:</strong> {{ e.vasarnap }}</div>
+                </div>
+
+                <div class="mt-3" *ngIf="e.megjegyzes">
+                  <strong>Megjegyzés:</strong>
+                  <div class="mt-1 text-light-emphasis">{{ e.megjegyzes }}</div>
+                </div>
+              </div>
+
+              <div>
+                <button class="btn btn-outline-danger btn-sm" (click)="confirmEdzestervTorles(e.id!)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
   </div>
 </section>

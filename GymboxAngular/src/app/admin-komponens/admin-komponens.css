@@ -1,0 +1,11 @@
+button.btn {
+  min-width: 160px;
+}
+
+.bg-black {
+  background-color: #111 !important;
+}
+
+.text-light-emphasis {
+  color: #cfcfcf;
+}
